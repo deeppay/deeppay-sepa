@@ -8,6 +8,8 @@ This website provides representations of the XSD present :
 Content can be seen here :
 http://cdn.rawgit.com/deeppay/deeppay-sepa/master/svg/pacs.008.001.06.svg
 
+SVG files were created using a modified version of (XSDVI)[https://sourceforge.net/projects/xsdvi/]
+
 Best viewed with Chrome or Chromium browser and enough memory (at least 8Gb).
 
 Provided courtesy of DeepPay. DeepPay disclaims any damage caused or related to the use of this material.
