@@ -1,7 +1,16 @@
 # deeppay-sepa - SVG representation of all XSDs from ISO20022.
 
-From this page : https://www.iso20022.org/message_archive.page
-And this page : https://www.iso20022.org/full_catalogue.page
+This website provides representations of the XSD present :
+
+* From this page : https://www.iso20022.org/message_archive.page
+* And this page : https://www.iso20022.org/full_catalogue.page
+
+Content can be seen here :
+http://cdn.rawgit.com/deeppay/deeppay-sepa/master/svg/pacs.008.001.06.svg
+
+Best viewed with Chrome or Chromium browser and enough memory (at least 8Gb).
+
+Provided courtesy of DeepPay. DeepPay disclaims any damage caused or related to the use of this material.
 
 This website is not the official site and that the sole source of up-to-date materials and information on ISO 20022 message standards and Repository is https://www.iso20022.org/.
 
