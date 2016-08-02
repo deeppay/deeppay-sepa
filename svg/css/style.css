@@ -1,7 +1,9 @@
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic|Open+Sans+Condensed:700");
 /********************/
 /* GENERAL SETTINGS */
 /********************/
 body {
+    font-family: 'Open Sans', sans-serif;
     font-size: 16px;
 }
 
@@ -19,6 +21,9 @@ body {
 /********************/
 /* EXPANDABLE LIST  */
 /********************/
+
+
+
 #listContainer{
   margin-top:15px;
 }

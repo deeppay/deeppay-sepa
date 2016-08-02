@@ -29,6 +29,7 @@ print("""
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>deepPay ISO20022 XSD's svg-representation </title>
+	<link rel="icon" type="image/x-icon" href="img/favicon.ico" />
         <link rel="stylesheet" href="css/style.css" type="text/css" media="screen, projection">
         <script type="text/javascript" src="js/jquery-1.4.2.min.js">
         </script>
@@ -37,7 +38,7 @@ print("""
         </script>
     </head>
     <body>
-	<h1>deepPay ISO20022 XSD's svg-representation</h1>
+	<h1><img src="img/deeppay-text.png" alt="deepPay" height="32px" style="vertical-align:text-bottom;"/> ISO20022 XSD's svg-representation</h1>
 """)
 print("<ul id='expList'>")
 for mtype in sorted(d.keys()):
