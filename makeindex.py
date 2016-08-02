@@ -39,6 +39,11 @@ print("""
     </head>
     <body>
 	<h1><img src="img/deeppay-text.png" alt="deepPay" height="32px" style="vertical-align:text-bottom;"/> ISO20022 XSD's svg-representation</h1>
+        <div id="listContainer">
+            <div class="listControl">
+                <a id="expandList">Expand All</a>
+                <a id="collapseList">Collapse All</a>
+            </div>
 """)
 print("<ul id='expList'>")
 for mtype in sorted(d.keys()):
@@ -54,6 +59,6 @@ for mtype in sorted(d.keys()):
 				print("    <li><a href='http://cdn.rawgit.com/deeppay/deeppay-sepa/master/svg/%s.%s.%s.%s.svg'>%s.%s.%s.%s</a></li>" % (mtype, subtype, minor, version, mtype, subtype, minor, version))
 		print("</ul></li>")
 	print("</ul></li>")
-print("</ul>")
+print("</ul></div>")
 print("</body></html>")
 
