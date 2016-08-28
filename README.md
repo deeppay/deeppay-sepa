@@ -1,7 +1,6 @@
 # deeppay-sepa - SVG representation of all XSDs from ISO20022.
 
-[access all svg representations here!](http://rawgit.com/deeppay/deeppay-sepa/master/svg/)
-
+[access all svg representations here!](http://www.deeppay.net/sepa/)
 This website provides representations of the XSD present :
 
 * From this page : https://www.iso20022.org/message_archive.page
