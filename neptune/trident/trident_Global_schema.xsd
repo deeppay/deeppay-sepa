@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by christophe duquesne (Dryade SARL) -->
 <!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Christophe Duquesne (Dryade) -->
 <!--  File: trident_Global_schema.xsd  -->
@@ -71,8 +71,8 @@
     </xsd:sequence>
   </xsd:complexType>
   <!-- WGS84 Coordinates
-       The range of longitude is -180° to +180°, and the range of latitude is -90° to +90°. 0° longitude corresponds to the Greenwich Meridian, and
-       positive angles are to the East, while negative angles are to the West. 0° latitude corresponds to the equator, and positive angles are to the North, while negative angles are to the South.
+       The range of longitude is -180Â° to +180Â°, and the range of latitude is -90Â° to +90Â°. 0Â° longitude corresponds to the Greenwich Meridian, and
+       positive angles are to the East, while negative angles are to the West. 0Â° latitude corresponds to the equator, and positive angles are to the North, while negative angles are to the South.
     -->
   <xsd:simpleType name="LongitudeType">
     <xsd:restriction base="xsd:decimal">

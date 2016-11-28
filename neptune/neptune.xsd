@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- ==========================================================================	-->
 <!--  															-->
 <!-- CERTU														-->
@@ -25,12 +25,12 @@ Request / Answer schema
 Copyright (c) 2001 TRIDENT consortium, All Rights Reserved.
 		</xsd:documentation>
 	</xsd:annotation>
-	<!--.....Dépendance sur SIRI pour les équipements...-->
+	<!--.....DÃ©pendance sur SIRI pour les Ã©quipements...-->
 	<xsd:import namespace="http://www.ifopt.org.uk/acsb" 
 	schemaLocation="./acsb/acsb_passengerMobility-v0.3.xsd"/>
 	<xsd:import namespace="http://www.siri.org.uk/siri" 
 	schemaLocation="./siri/siri_facilities-v1.2.xsd"/>
-	<!--.....Inclusion des éléments TRIDENT nécessaires...-->
+	<!--.....Inclusion des Ã©lÃ©ments TRIDENT nÃ©cessaires...-->
 	
 	<xsd:include schemaLocation="./trident/trident_Global_schema.xsd"/>
 	<xsd:include schemaLocation="./trident/trident_Location_schema.xsd"/>
@@ -48,7 +48,7 @@ Copyright (c) 2001 TRIDENT consortium, All Rights Reserved.
 	</xsd:complexType>
 	<xsd:complexType name="TimeSlotType">
 		<xsd:annotation>
-			<xsd:documentation>Type pour les fréquences horaire</xsd:documentation>
+			<xsd:documentation>Type pour les frÃ©quences horaire</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="trd:TridentObjectType">
@@ -63,7 +63,7 @@ Copyright (c) 2001 TRIDENT consortium, All Rights Reserved.
 	</xsd:complexType>
 	<xsd:complexType name="RouteExtension">
 		<xsd:annotation>
-			<xsd:documentation>Extension d'itinéraire qui en précise le sens, aller ou retour</xsd:documentation>
+			<xsd:documentation>Extension d'itinÃ©raire qui en prÃ©cise le sens, aller ou retour</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="wayBack" type="xsd:string"/>
@@ -71,7 +71,7 @@ Copyright (c) 2001 TRIDENT consortium, All Rights Reserved.
 	</xsd:complexType>
 	<xsd:complexType name="StopAreaExtension">
 		<xsd:annotation>
-			<xsd:documentation>Extension de zone d'arrêts qui précise notamment un code tarifaire et un identifiant fonctionnel</xsd:documentation>
+			<xsd:documentation>Extension de zone d'arrÃªts qui prÃ©cise notamment un code tarifaire et un identifiant fonctionnel</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="areaType" type="ChouetteAreaType"/>
@@ -103,7 +103,7 @@ Copyright (c) 2001 TRIDENT consortium, All Rights Reserved.
 	</xsd:complexType>
 	<xsd:complexType name="LineExtensionType">
 		<xsd:annotation>
-			<xsd:documentation>Extension de ligne pour l'accessibilité aux PMR</xsd:documentation>
+			<xsd:documentation>Extension de ligne pour l'accessibilitÃ© aux PMR</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="stableId" type="xsd:string" minOccurs="0">
@@ -123,7 +123,7 @@ Copyright (c) 2001 TRIDENT consortium, All Rights Reserved.
 	</xsd:complexType>
 	<xsd:complexType name="ChouetteFacilityType">
 		<xsd:annotation>
-			<xsd:documentation>Description des equipement situés dans les zones d'arrêt ou les vehicules (via la ligne)</xsd:documentation>
+			<xsd:documentation>Description des equipement situÃ©s dans les zones d'arrÃªt ou les vehicules (via la ligne)</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="trd:TridentObjectType">
@@ -177,18 +177,18 @@ Copyright (c) 2001 TRIDENT consortium, All Rights Reserved.
 	</xsd:complexType>
 	<xsd:complexType name="ChouettePTNetworkType">
 		<xsd:annotation>
-			<xsd:documentation>La strucutre d'échange d'une ligne de transport.
-Cette strucuture contient la totalité des données qui décrivent la ligne.</xsd:documentation>
+			<xsd:documentation>La strucutre d'Ã©change d'une ligne de transport.
+Cette strucuture contient la totalitÃ© des donnÃ©es qui dÃ©crivent la ligne.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="PTNetwork" type="trd:PTNetworkType">
 				<xsd:annotation>
-					<xsd:documentation>Le réseau de la ligne</xsd:documentation>
+					<xsd:documentation>Le rÃ©seau de la ligne</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="GroupOfLine" type="GroupOfLineType" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Groupe de ligne auquel appartient la ligne décrite</xsd:documentation>
+					<xsd:documentation>Groupe de ligne auquel appartient la ligne dÃ©crite</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="Company" type="trd:CompanyType" minOccurs="0" maxOccurs="unbounded">
@@ -215,7 +215,7 @@ Cette strucuture contient la totalité des données qui décrivent la ligne.</xsd:d
 						</xsd:element>
 						<xsd:element name="AreaCentroid" minOccurs="0" maxOccurs="unbounded">
 							<xsd:annotation>
-								<xsd:documentation>Liste de position géographiques</xsd:documentation>
+								<xsd:documentation>Liste de position gÃ©ographiques</xsd:documentation>
 							</xsd:annotation>
 							<xsd:complexType>
 								<xsd:complexContent>
@@ -229,7 +229,7 @@ Cette strucuture contient la totalité des données qui décrivent la ligne.</xsd:d
 			<xsd:element name="ConnectionLink" minOccurs="0" maxOccurs="unbounded">
 				<xsd:annotation>
 					<xsd:documentation>La liste de toutes les correspondances sur la ligne.
-Les correspondances relient un arrêt de la ligne avec un autre arrêt de cette même ligne ou d'une autre ligne.</xsd:documentation>
+Les correspondances relient un arrÃªt de la ligne avec un autre arrÃªt de cette mÃªme ligne ou d'une autre ligne.</xsd:documentation>
 				</xsd:annotation>
 				<xsd:complexType>
 					<xsd:complexContent>
@@ -249,14 +249,14 @@ Les correspondances relient un arrêt de la ligne avec un autre arrêt de cette mê
 			<xsd:element name="TimeSlot" type="TimeSlotType" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element name="ChouetteLineDescription">
 				<xsd:annotation>
-					<xsd:documentation>Structure qui regroupe les autres données de la ligne.
+					<xsd:documentation>Structure qui regroupe les autres donnÃ©es de la ligne.
 </xsd:documentation>
 				</xsd:annotation>
 				<xsd:complexType>
 					<xsd:sequence>
 						<xsd:element name="Line">
 							<xsd:annotation>
-								<xsd:documentation>La ligne et ses références vers ses itinéraires et son réseau</xsd:documentation>
+								<xsd:documentation>La ligne et ses rÃ©fÃ©rences vers ses itinÃ©raires et son rÃ©seau</xsd:documentation>
 							</xsd:annotation>
 							<xsd:complexType>
 								<xsd:complexContent>
@@ -270,7 +270,7 @@ Les correspondances relient un arrêt de la ligne avec un autre arrêt de cette mê
 						</xsd:element>
 						<xsd:element name="ChouetteRoute" maxOccurs="unbounded">
 							<xsd:annotation>
-								<xsd:documentation>La liste de tous les itinéraires de la ligne.</xsd:documentation>
+								<xsd:documentation>La liste de tous les itinÃ©raires de la ligne.</xsd:documentation>
 							</xsd:annotation>
 							<xsd:complexType>
 								<xsd:complexContent>
@@ -284,7 +284,7 @@ Les correspondances relient un arrêt de la ligne avec un autre arrêt de cette mê
 						</xsd:element>
 						<xsd:element name="StopPoint" minOccurs="2" maxOccurs="unbounded">
 							<xsd:annotation>
-								<xsd:documentation>La liste de tous les arrêts parcourus par les tronçons des itinéraires de ligne.
+								<xsd:documentation>La liste de tous les arrÃªts parcourus par les tronÃ§ons des itinÃ©raires de ligne.
 
 </xsd:documentation>
 							</xsd:annotation>
@@ -301,7 +301,7 @@ Les correspondances relient un arrêt de la ligne avec un autre arrêt de cette mê
 						</xsd:element>
 						<xsd:element name="PtLink" type="PTLinkType" maxOccurs="unbounded">
 							<xsd:annotation>
-								<xsd:documentation>La liste de tous les tronçons des itinéraires de la ligne.</xsd:documentation>
+								<xsd:documentation>La liste de tous les tronÃ§ons des itinÃ©raires de la ligne.</xsd:documentation>
 							</xsd:annotation>
 						</xsd:element>
 						<xsd:element name="JourneyPattern" type="JourneyPatternType" minOccurs="0" maxOccurs="unbounded">
@@ -323,7 +323,7 @@ Les correspondances relient un arrêt de la ligne avec un autre arrêt de cette mê
 			<xsd:element name="AccessLink" minOccurs="0" maxOccurs="unbounded">
 				<xsd:annotation>
 					<xsd:documentation>La liste de toutes les correspondances sur la ligne.
-Les correspondances relient un arrêt de la ligne avec un autre arrêt de cette même ligne ou d'une autre ligne.</xsd:documentation>
+Les correspondances relient un arrÃªt de la ligne avec un autre arrÃªt de cette mÃªme ligne ou d'une autre ligne.</xsd:documentation>
 				</xsd:annotation>
 				<xsd:complexType>
 					<xsd:complexContent>
