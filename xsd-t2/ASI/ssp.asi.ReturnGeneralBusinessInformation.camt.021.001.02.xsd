@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.021.001.02" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.021.001.02" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="BusinessInformation">
+		<xs:sequence>
+			<xs:element name="GnlBizRpt" type="GeneralBusinessReport" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>general business information report</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReturnGeneralBusinessInformationV02">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageIdentification">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BizRpt" type="BusinessInformation">
+				<xs:annotation>
+					<xs:documentation>business report</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="RtrGnlBizInf" type="ReturnGeneralBusinessInformationV02"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeneralBusinessInformation">
+		<xs:sequence>
+			<xs:element name="Qlfr" type="InformationQualifierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>qualifier</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sbjt" type="NotificationCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>subject</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SbjtDtls" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>subject details</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeneralBusinessReport">
+		<xs:sequence>
+			<xs:element name="BizInfRef" type="RestrictedFINXMax16Text">
+				<xs:annotation>
+					<xs:documentation>business information reference</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GnlBizInf" type="GeneralBusinessInformation">
+				<xs:annotation>
+					<xs:documentation>general business information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InformationQualifierType">
+		<xs:sequence>
+			<xs:element name="IsFrmtd" type="YesNoIndicator" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>is formatted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageIdentification">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="FINCharacterSet2">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(([A-Z]|[a-z]|[0-9]|[\-]|[?]|[:]|[(]|[)]|[.]|[,]|[']|[+]|[{]|[}]|[&#10;]|[&#13;]|[ ])*)">
+				<xs:annotation>
+					<xs:documentation>no slash</xs:documentation>
+				</xs:annotation>
+			</xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINXMax16Text">
+		<xs:annotation>
+			<xs:documentation>RestrictedFINXMax16Text</xs:documentation>
+			<xs:documentation>Specifies a character string with a maximum length of 16 characters. It has a pattern that disables the use of characters that is not part of the character set X. That is, 0-9 a-z A-Z / - ? : ( ) . , ‘ + , and disable the use of slash "/" at the beginning and end of line and double slash "//" within the line.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="16"/>
+			<xs:pattern value="([0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ]([0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ]*(/[0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ])?)*)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NotificationCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OVN-PROC-OPN">
+				<xs:annotation>
+					<xs:documentation>overnight procedure is open</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LIQ-CYCL-END">
+				<xs:annotation>
+					<xs:documentation>release of liquidity after end of cycle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OVN-PROC-OPEN">
+				<xs:annotation>
+					<xs:documentation>open overnight procedure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OVN-CYCL-OPEN">
+				<xs:annotation>
+					<xs:documentation>open overnight cycle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OVN-CYCL-CLOS">
+				<xs:annotation>
+					<xs:documentation>close overnight cycle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OVN-PROC-CLOS">
+				<xs:annotation>
+					<xs:documentation>close overnight procedure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DAY-PROC-OPEN">
+				<xs:annotation>
+					<xs:documentation>open daylight rocedure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DAY-CYCL-OPEN">
+				<xs:annotation>
+					<xs:documentation>open daylight cycle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DAY-CYCL-CLOS">
+				<xs:annotation>
+					<xs:documentation>close daylight cycle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DAY-PROC-CLOS">
+				<xs:annotation>
+					<xs:documentation>close daylight procedure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="YesNoIndicator">
+		<xs:restriction base="xs:boolean">
+			<xs:pattern value="true"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 rel. 2 (http://www.altova.com) by 15 concurrent users of Z4 (DEUTSCHE BUNDESBANK) -->
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.005.001.05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.005.001.05" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="BranchAndFinancialInstitutionIdentification5">
+		<xs:sequence>
+			<xs:element name="FinInstnId" type="FinancialInstitutionIdentification8"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="GetTx" type="GetTransaction">
+				<xs:annotation>
+					<xs:documentation>get transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FinancialInstitutionIdentification8">
+		<xs:sequence>
+			<xs:element name="BICFI" type="BICFIIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetTransaction">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader2"/>
+			<xs:element name="TxQryDef" type="TransactionQuery1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>transaction query</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageHeader2">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentSearch4">
+		<xs:sequence>
+			<xs:element name="CdtDbtInd" type="CreditDebitCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>credit/debit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PmtTp" type="PaymentType3Choice" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>payment type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentType3Choice">
+		<xs:sequence>
+			<xs:element name="Cd" type="PaymentType3Code"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SystemSearch3">
+		<xs:sequence>
+			<xs:element name="MmbId" type="BranchAndFinancialInstitutionIdentification5" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>member identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionCriteria1Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="QryNm" type="Max35Text">
+					<xs:annotation>
+						<xs:documentation>query name - reference to preceding query</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="NewCrit" type="TransactionCriteria4">
+					<xs:annotation>
+						<xs:documentation>new query definition</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionCriteria4">
+		<xs:sequence>
+			<xs:element name="SchCrit" type="TransactionSearchCriteria4" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>search criteria</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionQuery1">
+		<xs:sequence>
+			<xs:element name="QryTp" type="QueryType2Code" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>query type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TxCrit" type="TransactionCriteria1Choice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>transaction criteria</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionSearchCriteria4">
+		<xs:sequence>
+			<xs:element name="PmtTo" type="SystemSearch3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>creditor</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PmtFr" type="SystemSearch3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>debtor</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PmtSch" type="PaymentSearch4" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>payment search</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICFIIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CreditDebitCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CRDT">
+				<xs:annotation>
+					<xs:documentation>credits</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DBIT">
+				<xs:annotation>
+					<xs:documentation>debits</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PaymentType3Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MGL">
+				<xs:annotation>
+					<xs:documentation>marginal lending</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OND">
+				<xs:annotation>
+					<xs:documentation>overnight deposit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="QueryType2Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ALLL">
+				<xs:annotation>
+					<xs:documentation>return all matching items</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CHNG">
+				<xs:annotation>
+					<xs:documentation>return new items</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DELD">
+				<xs:annotation>
+					<xs:documentation>return deleted items</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MODF">
+				<xs:annotation>
+					<xs:documentation>return modified items</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

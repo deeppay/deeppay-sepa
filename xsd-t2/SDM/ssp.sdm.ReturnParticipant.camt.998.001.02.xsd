@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.998.001.02" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.998.001.02" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AccountInfo">
+		<xs:sequence>
+			<xs:element name="RTGSAcct" type="RTGSAccount" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>RTGS account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PoolgLqdty" type="PoolingOfLiquidity">
+				<xs:annotation>
+					<xs:documentation>pooling of liquidity</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HamAcct" type="HAMAccount" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>HAM account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BusinessReport">
+		<xs:sequence>
+			<xs:element name="Ptcpt" type="Participant" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>participant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CompulsoryReserveInfo">
+		<xs:sequence>
+			<xs:element name="CRMgmt" type="CRMngmt">
+				<xs:annotation>
+					<xs:documentation>compulsory reserve management</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CRSrc" type="Source" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>compulsory reserve source</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BICMntnr" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>BIC direct maintainer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BICMFILdr" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>BIC MFI Leader</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsolidatedInfo">
+		<xs:sequence>
+			<xs:element name="GOANm" type="Name" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>group of account name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GOAId" type="Max12Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>group of account identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MainAcct" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>main account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="PrtryMsg" type="ProprietaryMessage">
+				<xs:annotation>
+					<xs:documentation>free format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorCode">
+		<xs:sequence>
+			<xs:element name="Prtry" type="Max4AlphaNumericText">
+				<xs:annotation>
+					<xs:documentation>XML error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling">
+		<xs:sequence>
+			<xs:element name="Err" type="ErrorCode">
+				<xs:annotation>
+					<xs:documentation>error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Desc" type="Max140Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HAMAccount">
+		<xs:sequence>
+			<xs:element name="CmngdAcct" type="Flag" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>co managed account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ntfctn900Cmngr" type="Flag">
+				<xs:annotation>
+					<xs:documentation>MT900 notification for co-manager</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ntfctn910Cmngr" type="Flag">
+				<xs:annotation>
+					<xs:documentation>MT910 notification for co-manager</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BalRptCmngr" type="BalanceReport" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>balance report co-manager</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HamAcctNb" type="Code" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>HAM account number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Participant">
+		<xs:sequence>
+			<xs:element name="RecStsInf" type="RecordStatusInfo">
+				<xs:annotation>
+					<xs:documentation>record status information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PtcptInf" type="ParticipantInfo">
+				<xs:annotation>
+					<xs:documentation>participant information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AcctInf" type="AccountInfo">
+				<xs:annotation>
+					<xs:documentation>account information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CRinf" type="CompulsoryReserveInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>compulsory reserve information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StgFclts" type="Flag">
+				<xs:annotation>
+					<xs:documentation>standing facilities</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParticipantInfo">
+		<xs:sequence>
+			<xs:element name="PtcptXclsn" type="Exclusion">
+				<xs:annotation>
+					<xs:documentation>participant exclusion</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ctry" type="CountryCode">
+				<xs:annotation>
+					<xs:documentation>responsible CB</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LglNttyNm1" type="Name">
+				<xs:annotation>
+					<xs:documentation>legal entitiy name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PtcptTp" type="PartType">
+				<xs:annotation>
+					<xs:documentation>participant type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BIC" type="BICIdentifier">
+				<xs:annotation>
+					<xs:documentation>BIC participant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BICAddss" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>BIC addressee</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BICAcctHldr" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>BIC account holder</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MainBICFlag" type="Flag">
+				<xs:annotation>
+					<xs:documentation>is main BIC</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NSC" type="SortingCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>national sorting code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MFICd" type="Max30Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>MFI code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PtcptNm1" type="Name">
+				<xs:annotation>
+					<xs:documentation>participant name 1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PtcptNm2" type="Name" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>participant name 2</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PtcptNm3" type="Name" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>participant name 3</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PtcptAdr" type="Address" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>participant address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PtcptZIPCd" type="ZIPCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>participant zip code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Cty" type="City">
+				<xs:annotation>
+					<xs:documentation>city</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ISC" type="SectorCode">
+				<xs:annotation>
+					<xs:documentation>institutional sector code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Trgt2Pblshd" type="Flag">
+				<xs:annotation>
+					<xs:documentation>published in the TARGET2 directory</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LVPFlag" type="Flag">
+				<xs:annotation>
+					<xs:documentation>is Internet-Based Participant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PckdFile" type="Flag">
+				<xs:annotation>
+					<xs:documentation>packed file delivery for push mode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Svc" type="Service" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>service for TARGET2 directory</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DN" type="Max100Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>distinguished name for TARGET2 directory</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RTGSAccount">
+		<xs:sequence>
+			<xs:element name="RTGSTp" type="RTGSType">
+				<xs:annotation>
+					<xs:documentation>RTGS type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RTGSAcctNb" type="Code" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>RTGS account number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HasSubAcct" type="Flag">
+				<xs:annotation>
+					<xs:documentation>has sub-account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageReference">
+		<xs:sequence>
+			<xs:element name="Ref" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PoolingOfLiquidity">
+		<xs:sequence>
+			<xs:element name="VrtlAcct" type="VirtualAccount" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>virtual account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CnsldtdInf" type="ConsolidatedInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>consolidated information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData">
+		<xs:sequence>
+			<xs:element name="Tp" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>always "ReturnParticipant"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SspPrtryDt" type="SspProprietaryData">
+				<xs:annotation>
+					<xs:documentation>SSP proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryMessage">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageReference">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Rltd" type="MessageReference">
+				<xs:annotation>
+					<xs:documentation>related reference - message identification of the related request</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrtryData" type="ProprietaryData">
+				<xs:annotation>
+					<xs:documentation>proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RecordStatusInfo">
+		<xs:sequence>
+			<xs:element name="PlnndChng" type="Change">
+				<xs:annotation>
+					<xs:documentation>planned change</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecSts" type="RecordStatus">
+				<xs:annotation>
+					<xs:documentation>record status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FrstDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>first activation date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ModDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>modification date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>end date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReturnParticipant">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="BizRpt" type="BusinessReport">
+					<xs:annotation>
+						<xs:documentation>business report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OprlErr" type="ErrorHandling">
+					<xs:annotation>
+						<xs:documentation>technical error report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SspProprietaryData">
+		<xs:sequence>
+			<xs:element name="ReturnParticipant" type="ReturnParticipant">
+				<xs:annotation>
+					<xs:documentation>message type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VirtualAccount">
+		<xs:sequence>
+			<xs:element name="GOANm" type="Name" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>group of account name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GOAId" type="Max12Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>group of account identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MainAcct" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>main account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Address">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="140"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BalanceReport">
+		<xs:restriction base="xs:decimal">
+			<xs:enumeration value="940"/>
+			<xs:enumeration value="950"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Change">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>none</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D">
+				<xs:annotation>
+					<xs:documentation>deletion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M">
+				<xs:annotation>
+					<xs:documentation>modification</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="City">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Code">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="34"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{2,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CRMngmt">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A">
+				<xs:annotation>
+					<xs:documentation>all</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D">
+				<xs:annotation>
+					<xs:documentation>direct</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="I">
+				<xs:annotation>
+					<xs:documentation>indirect</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="L">
+				<xs:annotation>
+					<xs:documentation>locally</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="P">
+				<xs:annotation>
+					<xs:documentation>pool</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>no</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Exclusion">
+		<xs:restriction base="Flag"/>
+	</xs:simpleType>
+	<xs:simpleType name="Flag">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Y"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date">
+			<xs:pattern value="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max100Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="100"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max12Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="12"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max140Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="140"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max30Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="30"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Module">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HAM"/>
+			<xs:enumeration value="RTGS"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Name">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PartType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AL">
+				<xs:annotation>
+					<xs:documentation>all</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CI">
+				<xs:annotation>
+					<xs:documentation>credit institution</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CB">
+				<xs:annotation>
+					<xs:documentation>central bank</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CU">
+				<xs:annotation>
+					<xs:documentation>CB customer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TC">
+				<xs:annotation>
+					<xs:documentation>technical</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RecordStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AC">
+				<xs:annotation>
+					<xs:documentation>active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FU">
+				<xs:annotation>
+					<xs:documentation>future</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RE">
+				<xs:annotation>
+					<xs:documentation>rejected</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AR">
+				<xs:annotation>
+					<xs:documentation>archived</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AF">
+				<xs:annotation>
+					<xs:documentation>archived future</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DV">
+				<xs:annotation>
+					<xs:documentation>delivery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ID">
+				<xs:annotation>
+					<xs:documentation>in deletion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IC">
+				<xs:annotation>
+					<xs:documentation>in change</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RTGSType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A">
+				<xs:annotation>
+					<xs:documentation>all</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D">
+				<xs:annotation>
+					<xs:documentation>direct</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="I">
+				<xs:annotation>
+					<xs:documentation>indirect</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>no</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Service">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="30"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SortingCode">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="15"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SectorCode">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Source">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A">
+				<xs:annotation>
+					<xs:documentation>all</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="R">
+				<xs:annotation>
+					<xs:documentation>RTGS</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H">
+				<xs:annotation>
+					<xs:documentation>HAM</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="P">
+				<xs:annotation>
+					<xs:documentation>PHA</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ZIPCode">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="15"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

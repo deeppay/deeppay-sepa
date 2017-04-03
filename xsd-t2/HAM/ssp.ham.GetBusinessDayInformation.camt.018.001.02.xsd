@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.018.001.02" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.018.001.02" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="BusinessDayInformationCriteria">
+		<xs:sequence>
+			<xs:element name="SchCrit" type="BusinessDayInformationSearchCriteria" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>search criteria</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BusinessDayInformationCriteriaDefinition">
+		<xs:sequence>
+			<xs:element name="NewCrit" type="BusinessDayInformationCriteria">
+				<xs:annotation>
+					<xs:documentation>new query definition</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BusinessDayInformationQueryDefinition">
+		<xs:sequence>
+			<xs:element name="BizDayInfCrit" type="BusinessDayInformationCriteriaDefinition" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>business day information criteria</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BusinessDayInformationSearchCriteria">
+		<xs:sequence>
+			<xs:element name="SysId" type="SystemIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>system identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="GetBizDayInf" type="GetBusinessDayInformation">
+				<xs:annotation>
+					<xs:documentation>get business-day information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetBusinessDayInformation">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageIdentification">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BizDayInfQryDef" type="BusinessDayInformationQueryDefinition" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>business day information query</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageIdentification">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SystemIdentification">
+		<xs:sequence>
+			<xs:element name="Ctry" type="CountryCode">
+				<xs:annotation>
+					<xs:documentation>country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CountryCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{2,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

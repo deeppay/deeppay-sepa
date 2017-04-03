@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<!-- SWIFT standard application header -->
+<xs:schema xmlns="urn:swift:xsd:$ahV10" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:$ahV10" elementFormDefault="qualified">
+	<xs:element name="AppHdr" type="AppHdr"/>
+	<xs:complexType name="AppHdr">
+		<xs:sequence>
+			<xs:element name="From" type="EntityIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>source - used for Return and Receipt messages only</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="To" type="EntityIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>destination - used for Get, Modify, Cancel etc. messages only.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MsgRef" type="Max30Text">
+				<xs:annotation>
+					<xs:documentation>message reference - not used in SSP</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CrDate" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>creation date - time when the message was created</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntityIdentification">
+		<xs:sequence>
+			<xs:element name="Type" type="Type">
+				<xs:annotation>
+					<xs:documentation>always "NAME"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Id" type="EntityIdentifier">
+				<xs:annotation>
+					<xs:documentation>SSP module</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="EntityIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HAM">
+				<xs:annotation>
+					<xs:documentation>Home Accounting Module</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ICM">
+				<xs:annotation>
+					<xs:documentation>Information and Control Module - used for technical protocol messages send by SSP and not linked to the module</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NAME"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max30Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

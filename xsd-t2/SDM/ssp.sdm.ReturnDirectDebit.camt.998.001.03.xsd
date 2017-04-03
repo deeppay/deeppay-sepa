@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.998.001.03" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.998.001.03" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="BusinessReport">
+		<xs:sequence>
+			<xs:element name="DrctDbt" type="DirDeb">
+				<xs:annotation>
+					<xs:documentation>direct debit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DirDeb">
+		<xs:sequence>
+			<xs:element name="PtcptId" type="ParticipantId">
+				<xs:annotation>
+					<xs:documentation>participant identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DrctDbtList" type="DirectDebitList">
+				<xs:annotation>
+					<xs:documentation>direct debit list</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DirDebInfo">
+		<xs:sequence>
+			<xs:element name="RecSts" type="RecordStatus">
+				<xs:annotation>
+					<xs:documentation>record status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DrctDbtRef" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>direct debit reference</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DrctDbtIssr" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>direct debit issuer name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BICIssr" type="BICIdentifier">
+				<xs:annotation>
+					<xs:documentation>BIC of the direct debit issuer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IsFutrPrtct" type="Flag">
+				<xs:annotation>
+					<xs:documentation>is future participant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaxAmtCtrPty" type="ImpliedCurrencyAndAmount" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>maximum amount for this counterparty</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaxAmtPmt" type="ImpliedCurrencyAndAmount" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>maximum amount per payment for direct debit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DirectDebitList">
+		<xs:sequence>
+			<xs:element name="DrctDbtInf" type="DirDebInfo" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>direct debit information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="PrtryMsg" type="ProprietaryMessage">
+				<xs:annotation>
+					<xs:documentation>free format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorCode">
+		<xs:sequence>
+			<xs:element name="Prtry" type="Max4AlphaNumericText">
+				<xs:annotation>
+					<xs:documentation>XML error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling">
+		<xs:sequence>
+			<xs:element name="Err" type="ErrorCode">
+				<xs:annotation>
+					<xs:documentation>error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Desc" type="Max140Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageHeader1">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageReference">
+		<xs:sequence>
+			<xs:element name="Ref" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParticipantId">
+		<xs:sequence>
+			<xs:element name="Ctry" type="CountryCode">
+				<xs:annotation>
+					<xs:documentation>country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BICPtcpt" type="BICIdentifier">
+				<xs:annotation>
+					<xs:documentation>BIC participant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData">
+		<xs:sequence>
+			<xs:element name="Tp" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>always "ReturnDirectDebit"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Data" type="ProprietaryData3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData3">
+		<xs:sequence>
+			<xs:element name="SspPrtryDt" type="SspProprietaryData">
+				<xs:annotation>
+					<xs:documentation>SSP proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryMessage">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader1"/>
+			<xs:element name="Rltd" type="MessageReference">
+				<xs:annotation>
+					<xs:documentation>related reference - message identification of the related request</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrtryData" type="ProprietaryData">
+				<xs:annotation>
+					<xs:documentation>proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReturnDirectDebit">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="BizRpt" type="BusinessReport">
+					<xs:annotation>
+						<xs:documentation>business report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OprlErr" type="ErrorHandling">
+					<xs:annotation>
+						<xs:documentation>technical error report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SspProprietaryData">
+		<xs:sequence>
+			<xs:element name="ReturnDirectDebit" type="ReturnDirectDebit">
+				<xs:annotation>
+					<xs:documentation>message type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{2,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Flag">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Y"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:fractionDigits value="2"/>
+			<xs:totalDigits value="18"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max140Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="140"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RecordStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AC">
+				<xs:annotation>
+					<xs:documentation>active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FU">
+				<xs:annotation>
+					<xs:documentation>future</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IC">
+				<xs:annotation>
+					<xs:documentation>in change</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

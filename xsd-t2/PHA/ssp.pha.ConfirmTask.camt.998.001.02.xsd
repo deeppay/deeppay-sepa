@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 rel. 2 (http://www.altova.com) by 15 concurrent users of Z4 (DEUTSCHE BUNDESBANK) -->
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.998.001.02" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.998.001.02" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AdditionalReferences">
+		<xs:sequence>
+			<xs:element name="Ref" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>reference</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="PrtryMsg" type="ProprietaryMessage">
+				<xs:annotation>
+					<xs:documentation>free format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageReference">
+		<xs:sequence>
+			<xs:element name="Ref" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData4">
+		<xs:sequence>
+			<xs:element name="Tp" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>always "ConfirmTask"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SspPrtryDt" type="SspProprietaryData">
+				<xs:annotation>
+					<xs:documentation>SSP proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryMessage">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageReference"/>
+			<xs:element name="PrtryData" type="ProprietaryData4">
+				<xs:annotation>
+					<xs:documentation>proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SspProprietaryData">
+		<xs:sequence>
+			<xs:element name="TskId" type="TaskIdentification">
+				<xs:annotation>
+					<xs:documentation>task identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaskIdentification">
+		<xs:sequence>
+			<xs:element name="RltdRef" type="AdditionalReferences">
+				<xs:annotation>
+					<xs:documentation>related reference</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

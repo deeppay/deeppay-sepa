@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.004.001.05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.004.001.05" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AccountIdentification4Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Othr" type="GenericAccountIdentification1"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccountOrBusinessError1Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Acct" type="CashAccount23"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccountOrOperationalError1Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="AcctRpt" type="AccountReport13"/>
+				<xs:element name="OprlErr" type="ErrorHandling3"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccountReport13">
+		<xs:sequence>
+			<xs:element name="AcctId" type="AccountIdentification4Choice"/>
+			<xs:element name="AcctOrErr" type="AccountOrBusinessError1Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICFIIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="BalanceType8Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Cd" type="SystemBalanceType1Code"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashAccount23">
+		<xs:sequence>
+			<xs:element name="Tp" type="CashAccountType2Choice"/>
+			<xs:element name="MulBal" type="CashBalance5"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashAccountType2Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Cd" type="ExternalCashAccountType1Code"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashBalance5">
+		<xs:sequence>
+			<xs:element name="Amt" type="ImpliedCurrencyAndAmount"/>
+			<xs:element name="CdtDbtInd" type="CreditDebitCode"/>
+			<xs:element name="Tp" type="BalanceType8Choice"/>
+			<xs:element name="ValDt" type="DateAndDateTimeChoice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CreditDebitCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CRDT"/>
+			<xs:enumeration value="DBIT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DateAndDateTimeChoice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="DtTm" type="ISODateTime"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="RtrAcct" type="ReturnAccountV05"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling1Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Prtry" type="Max4AlphaNumericText"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling3">
+		<xs:sequence>
+			<xs:element name="Err" type="ErrorHandling1Choice"/>
+			<xs:element name="Desc" type="Max140Text" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ExternalCashAccountType1Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SACC"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="GenericAccountIdentification1">
+		<xs:sequence>
+			<xs:element name="Id" type="BICFIIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="5"/>
+			<xs:totalDigits value="18"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max140Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="140"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="4"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MessageHeader3">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text"/>
+			<xs:element name="OrgnlBizQry" type="OriginalBusinessQuery1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OriginalBusinessQuery1">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReturnAccountV05">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader3"/>
+			<xs:element name="RptOrErr" type="AccountOrOperationalError1Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SystemBalanceType1Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CRRT"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

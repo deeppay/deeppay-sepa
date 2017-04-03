@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.007.001.04" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.007.001.04" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="DateTimePeriodChoice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="FrDtTm" type="ISODateTime">
+					<xs:annotation>
+						<xs:documentation>earliest debit time</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ToDtTm" type="ISODateTime">
+					<xs:annotation>
+						<xs:documentation>latest debit time</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="ModfyTx" type="ModifyTransaction">
+				<xs:annotation>
+					<xs:documentation>modify transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageIdentification">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ModifyTransaction">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageIdentification">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mod" type="TransactionModification">
+				<xs:annotation>
+					<xs:documentation>modification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentDetails">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Prty" type="PriorityCodeChoice">
+					<xs:annotation>
+						<xs:documentation>priority code</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PrcgVldtyTm" type="DateTimePeriodChoice">
+					<xs:annotation>
+						<xs:documentation>execution time</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentIdentification">
+		<xs:sequence>
+			<xs:element name="PrtryRef" type="Max16Numeric">
+				<xs:annotation>
+					<xs:documentation>SSP booking id</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PriorityCodeChoice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Cd" type="PriorityCode">
+					<xs:annotation>
+						<xs:documentation>priority code</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PrtryCd" type="ProprietaryCode">
+					<xs:annotation>
+						<xs:documentation>SSP code</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionModification">
+		<xs:sequence>
+			<xs:element name="InstrRef" type="PaymentIdentification">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of a payment</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NewPmtValSet" type="PaymentDetails">
+				<xs:annotation>
+					<xs:documentation>new value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max16Numeric">
+		<xs:restriction base="xs:long">
+			<xs:minExclusive value="0"/>
+			<xs:maxInclusive value="9999999999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PriorityCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="LOWW">
+				<xs:annotation>
+					<xs:documentation>SSP normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NORM">
+				<xs:annotation>
+					<xs:documentation>SSP urgent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProprietaryCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DECR">
+				<xs:annotation>
+					<xs:documentation>decrease</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INCR">
+				<xs:annotation>
+					<xs:documentation>increase</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

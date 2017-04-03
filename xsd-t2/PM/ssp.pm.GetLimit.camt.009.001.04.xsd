@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.009.001.04" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.009.001.04" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="GetLmt" type="GetLimit">
+				<xs:annotation>
+					<xs:documentation>get limit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetLimit">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageIdentification">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LmtQryDef" type="LimitQueryDefinition" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>limit query</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LimitCriteria">
+		<xs:sequence>
+			<xs:element name="SchCrit" type="LimitSearchCriteria" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>search criteria</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LimitCriteriaDefinition">
+		<xs:sequence>
+			<xs:element name="NewCrit" type="LimitCriteria">
+				<xs:annotation>
+					<xs:documentation>new query definition</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LimitQueryDefinition">
+		<xs:sequence>
+			<xs:element name="LmtCrit" type="LimitCriteriaDefinition" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>limit criteria</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LimitSearchCriteria">
+		<xs:sequence>
+			<xs:element name="AcctOwnr" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>BIC used on behalf of third parties</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageIdentification">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.998.001.03" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.998.001.03" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AdditionalReferences">
+		<xs:sequence>
+			<xs:element name="Ref" type="Max16Numeric">
+				<xs:annotation>
+					<xs:documentation>TaskId</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="PrtryMsg" type="ProprietaryMessageV03"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageHeader1">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">MessageHeader1</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Set of characteristics, such as the identification or the creation date and time, specific to the message.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">MessageIdentification</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Point to point reference, as assigned by the sender, to unambiguously identify the message.&#13;
+Usage: The sender has to make sure that MessageIdentification is unique for a pre-agreed period.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageReference">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">MessageReference</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Message reference of relevance to the present message.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Ref" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Reference</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Business reference of the present message assigned by the party issuing the message. This reference must be unique amongst all messages of the same name sent by the same party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData3">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">ProprietaryData3</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Container for proprietary information. Business content of this element is not specified.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SspPrtryDt" type="SspProprietaryData">
+				<xs:annotation>
+					<xs:documentation>SSP proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData4">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">ProprietaryData4</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Container for proprietary information. Business content of this element is not specified.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Tp" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>always "RevokeTask"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Data" type="ProprietaryData3">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Data</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Proprietary data content.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryMessageV03">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">ProprietaryMessageV03</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">The ProprietaryMessage is used by financial institutions, with their own offices, or with other financial institutions with which they have established bilateral agreements. It is used as an envelope for a specified message included in it.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader1">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">MessageHeader</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Uniquely identifies the message.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrtryData" type="ProprietaryData4">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">ProprietaryData</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Business content of this element is not specified.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SspProprietaryData">
+		<xs:sequence>
+			<xs:element name="TskId" type="TaskIdentificationSearchCriteria">
+				<xs:annotation>
+					<xs:documentation>task identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaskIdentificationSearchCriteria">
+		<xs:sequence>
+			<xs:element name="RltdRef" type="AdditionalReferences">
+				<xs:annotation>
+					<xs:documentation>task identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Max16Numeric">
+		<xs:restriction base="xs:long">
+			<xs:maxInclusive value="9999999999999999"/>
+			<xs:minExclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">Max35Text</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies a character string with a maximum length of 35 characters.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

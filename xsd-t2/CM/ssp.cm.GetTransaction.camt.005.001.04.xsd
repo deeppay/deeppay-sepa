@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.005.001.04" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.005.001.04" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="GetTransaction">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageIdentification">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TxQryDef" type="TransactionQueryDefinition" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>transaction query</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateTimePeriodChoice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="DtTmRg" type="DateTimePeriodDetails">
+					<xs:annotation>
+						<xs:documentation>date/time range</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateTimePeriodDetails">
+		<xs:sequence>
+			<xs:element name="FrDtTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>from date/time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ToDtTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>to date/time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateTimeSearch">
+		<xs:sequence>
+			<xs:element name="DtTmSch" type="DateTimePeriodChoice">
+				<xs:annotation>
+					<xs:documentation>date/time search</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="GetTx" type="GetTransaction">
+				<xs:annotation>
+					<xs:documentation>get transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MemberIdentification">
+		<xs:sequence>
+			<xs:element name="BIC" type="BICIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageIdentification">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentIdentificationChoice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="ShrtBizId" type="PaymentInstructionReferenceDetails">
+					<xs:annotation>
+						<xs:documentation>short business identification</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentInstructionReferenceDetails">
+		<xs:sequence>
+			<xs:element name="PmtInstrRef" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>TRN</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IntrBkValDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>execution date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InstgAgtId" type="BICIdentifier">
+				<xs:annotation>
+					<xs:documentation>sender</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentSearch">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="InstrRef" type="PaymentIdentificationChoice">
+					<xs:annotation>
+						<xs:documentation>unique and unambiguous identification of a payment</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="TrfValDt" type="DateTimeSearch" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>entry time</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CdtDbtInd" type="CreditDebitCode" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>credit/debit</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="SystemSearch">
+		<xs:sequence>
+			<xs:element name="MmbId" type="MemberIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>member identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ctry" type="CountryCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionCriteria">
+		<xs:sequence>
+			<xs:element name="SchCrit" type="TransactionSearchCriteria">
+				<xs:annotation>
+					<xs:documentation>search criteria</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionCriteriaDefinitionChoice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="NewCrit" type="TransactionCriteria">
+					<xs:annotation>
+						<xs:documentation>new query definition</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionQueryDefinition">
+		<xs:sequence>
+			<xs:element name="TxCrit" type="TransactionCriteriaDefinitionChoice">
+				<xs:annotation>
+					<xs:documentation>transaction criteria</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionSearchCriteria">
+		<xs:sequence>
+			<xs:element name="PmtTo" type="SystemSearch" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>when credit: "account", when debit: not present, when credit/debit not present: not present</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PmtFr" type="SystemSearch" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>when credit: not present, when debit: "account", when credit/debit not present: not present</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PmtSch" type="PaymentSearch" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>payment search</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AmountDirectionCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DBIT"/>
+			<xs:enumeration value="CRDT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{2,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CreditDebitCode">
+		<xs:restriction base="AmountDirectionCode">
+			<xs:enumeration value="CRDT"/>
+			<xs:enumeration value="DBIT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

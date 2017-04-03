@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.008.001.05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.008.001.05" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="BranchAndFinancialInstitutionIdentification5">
+		<xs:sequence>
+			<xs:element name="FinInstnId" type="FinancialInstitutionIdentification8"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CancelTransaction">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader2"/>
+			<xs:element name="PmtId" type="PaymentIdentification4Choice">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of a payment</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="CclTx" type="CancelTransaction">
+				<xs:annotation>
+					<xs:documentation>cancel transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FinancialInstitutionIdentification8">
+		<xs:sequence>
+			<xs:element name="BICFI" type="BICFIIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LongPaymentIdentification1">
+		<xs:sequence>
+			<xs:element name="TxId" type="RestrictedFINXMax16Text">
+				<xs:annotation>
+					<xs:documentation>transaction reference number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IntrBkSttlmAmt" type="ImpliedCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>instructed amount</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IntrBkSttlmDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>value date = current business day</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PmtMtd" type="PaymentOrigin1">
+				<xs:annotation>
+					<xs:documentation>message type of payment origin</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InstgAgt" type="BranchAndFinancialInstitutionIdentification5">
+				<xs:annotation>
+					<xs:documentation>sender - RTGS debit account BIC</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InstdAgt" type="BranchAndFinancialInstitutionIdentification5">
+				<xs:annotation>
+					<xs:documentation>receiver - BIC_T2SI</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndToEndId" type="RestrictedFINXMax16Text">
+				<xs:annotation>
+					<xs:documentation>end-to-end identification of the payment</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageHeader2">
+		<xs:sequence>
+			<xs:element name="MsgId" type="RestrictedFINXMax35Text">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentIdentification4Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="LngBizId" type="LongPaymentIdentification1"/>
+				<xs:element name="PrtryId" type="Max16NumericText">
+					<xs:annotation>
+						<xs:documentation>SSP booking id</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentOrigin1">
+		<xs:sequence>
+			<xs:element name="Prtry" type="ProprietaryPaymentOriginType">
+				<xs:annotation>
+					<xs:documentation>always "T2SXML"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICFIIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:totalDigits value="14"/>
+			<xs:fractionDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date">
+			<xs:pattern value="[0-9]{4,4}\-[0-9]{2,2}\-[0-9]{2,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max16NumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,16}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINXMax16Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="16"/>
+			<xs:pattern value="([0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ]([0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ]*(/[0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ])?)*)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINXMax35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="([0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ]([0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ]*(/[0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ])?)*)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max3NumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProprietaryPaymentOriginType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="T2SXML"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

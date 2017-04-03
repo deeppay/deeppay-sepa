@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.047.001.02" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.047.001.02" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="Amount">
+		<xs:sequence>
+			<xs:element name="AmtWthtCcy" type="ImpliedCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>amount in Euro</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Date">
+		<xs:sequence>
+			<xs:element name="Dt" type="ISODate"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="RtrRsvatn" type="ReturnReservation">
+				<xs:annotation>
+					<xs:documentation>return reservation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorCode">
+		<xs:sequence>
+			<xs:element name="Prtry" type="Max4AlphaNumericText">
+				<xs:annotation>
+					<xs:documentation>XML error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling">
+		<xs:sequence>
+			<xs:element name="Err" type="ErrorCode">
+				<xs:annotation>
+					<xs:documentation>error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Desc" type="Max140Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReservationDetails">
+		<xs:sequence>
+			<xs:element name="Amt" type="Amount">
+				<xs:annotation>
+					<xs:documentation>amount</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StartDtTm" type="Date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>start date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReservationIdentificationDetails">
+		<xs:sequence>
+			<xs:element name="Tp" type="ReservationTypeCode">
+				<xs:annotation>
+					<xs:documentation>reservation type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AcctOwnr" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>participant BIC</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Reservations">
+		<xs:sequence>
+			<xs:element name="CurRsvatn" type="ReservationReport" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>current reservation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DfltRsvatn" type="ReservationReport" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>standing order reservation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReservationReport">
+		<xs:sequence>
+			<xs:element name="RsvatnId" type="ReservationIdentificationDetails">
+				<xs:annotation>
+					<xs:documentation>reservation identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Rsvatn" type="ReservationDetails">
+				<xs:annotation>
+					<xs:documentation>reservation details</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReturnReservation">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageIdentification">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BizQryRef" type="QueryReference">
+				<xs:annotation>
+					<xs:documentation>reference to the query</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="BizRpt" type="Reservations">
+					<xs:annotation>
+						<xs:documentation>business report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OprlErr" type="ErrorHandling">
+					<xs:annotation>
+						<xs:documentation>technical error report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MemberIdentification">
+		<xs:sequence>
+			<xs:element name="BIC" type="BICIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageIdentification">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QueryReference">
+		<xs:sequence>
+			<xs:element name="QryRef" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>query reference - message identification of the related request</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:fractionDigits value="2"/>
+			<xs:totalDigits value="18"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="ReservationTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CARE">
+				<xs:annotation>
+					<xs:documentation>reservation for cash withdrawels</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="THRE">
+				<xs:annotation>
+					<xs:documentation>threshold for advice of investment</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max140Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="140"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.998.001.03" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.998.001.03" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AccountIdentification">
+		<xs:sequence>
+			<xs:element name="BIC" type="BICIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccountReport">
+		<xs:sequence>
+			<xs:element name="AcctId" type="AccountIdentification">
+				<xs:annotation>
+					<xs:documentation>account identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Acct" type="CashAccountDetails">
+				<xs:annotation>
+					<xs:documentation>account details</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashAccountDetails">
+		<xs:sequence>
+			<xs:element name="MulBal" type="CashBalanceDetails" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>liquidity</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashBalanceDetails">
+		<xs:sequence>
+			<xs:element name="Amt" type="ImpliedCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>amount in Euro</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CdtDbtInd" type="CreditDebitCode">
+				<xs:annotation>
+					<xs:documentation>credit/debit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Tp" type="BalanceTypeCode">
+				<xs:annotation>
+					<xs:documentation>balance type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ValDt" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>value date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatePeriodDetails">
+		<xs:sequence>
+			<xs:element name="FrDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>from date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ToDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>to date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="PrtryMsg" type="ProprietaryMessage">
+				<xs:annotation>
+					<xs:documentation>free format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorCode">
+		<xs:sequence>
+			<xs:element name="Prtry" type="Max4AlphaNumericText">
+				<xs:annotation>
+					<xs:documentation>XML error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling">
+		<xs:sequence>
+			<xs:element name="Err" type="ErrorCode">
+				<xs:annotation>
+					<xs:documentation>error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Desc" type="Max140Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MemberIdentification">
+		<xs:sequence>
+			<xs:element name="BIC" type="BICIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageHeader1">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageReference">
+		<xs:sequence>
+			<xs:element name="Ref" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Penalty">
+		<xs:sequence>
+			<xs:element name="PnltyRpt" type="PenaltyReport">
+				<xs:annotation>
+					<xs:documentation>penalty report</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AcctRpt" type="AccountReport">
+				<xs:annotation>
+					<xs:documentation>account report</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PenaltyManagementIdentificationDetails">
+		<xs:sequence>
+			<xs:element name="Tp" type="BalanceTypeCode">
+				<xs:annotation>
+					<xs:documentation>balance type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ctry" type="CountryCode">
+				<xs:annotation>
+					<xs:documentation>country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CtrPtyId" type="MemberIdentification">
+				<xs:annotation>
+					<xs:documentation>counterparty identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PenaltyReport">
+		<xs:sequence>
+			<xs:element name="PnltyMgmtId" type="PenaltyManagementIdentificationDetails">
+				<xs:annotation>
+					<xs:documentation>penalty management identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MntncPrd" type="DatePeriodDetails">
+				<xs:annotation>
+					<xs:documentation>maintenance period</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PnltySts" type="PenaltyStatusCode">
+				<xs:annotation>
+					<xs:documentation>penalty status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PnltyTp" type="PenaltyTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>penalty type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FirstAmt" type="ImpliedCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>first amount in Euro</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SecondAmt" type="ImpliedCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>second amount in Euro</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData">
+		<xs:sequence>
+			<xs:element name="Tp" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>always "ReturnPenalty"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Data" type="ProprietaryData3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData3">
+		<xs:sequence>
+			<xs:element name="SspPrtryDt" type="SspProprietaryData">
+				<xs:annotation>
+					<xs:documentation>SSP proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryMessage">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader1"/>
+			<xs:element name="Rltd" type="MessageReference">
+				<xs:annotation>
+					<xs:documentation>related reference - message identification of the related request</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrtryData" type="ProprietaryData">
+				<xs:annotation>
+					<xs:documentation>proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SspProprietaryData">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="BizRpt" type="Penalty" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>business report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OprlErr" type="ErrorHandling">
+					<xs:annotation>
+						<xs:documentation>technical error report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BalanceTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BLCK">
+				<xs:annotation>
+					<xs:documentation>blocked</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PRAV">
+				<xs:annotation>
+					<xs:documentation>progressive average</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{2,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CreditDebitCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CRDT">
+				<xs:annotation>
+					<xs:documentation>credits</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DBIT">
+				<xs:annotation>
+					<xs:documentation>debits</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:fractionDigits value="2"/>
+			<xs:totalDigits value="18"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max105Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="105"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max140Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="140"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PenaltyStatusCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PAY">
+				<xs:annotation>
+					<xs:documentation>authorised</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NOPAY">
+				<xs:annotation>
+					<xs:documentation>cancelled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WAIT">
+				<xs:annotation>
+					<xs:documentation>waiting</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PenaltyTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ONE">
+				<xs:annotation>
+					<xs:documentation>simple infringement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TWO">
+				<xs:annotation>
+					<xs:documentation>repeated infringements</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

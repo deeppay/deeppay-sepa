@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.998.001.03" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.998.001.03" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AdditionalReferences">
+		<xs:sequence>
+			<xs:element name="Ref" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>reference</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="PrtryMsg" type="ProprietaryMessage">
+				<xs:annotation>
+					<xs:documentation>free format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageHeader1">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData">
+		<xs:sequence>
+			<xs:element name="Tp" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>always "GetTask"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Data" type="ProprietaryData3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData3">
+		<xs:sequence>
+			<xs:element name="SspPrtryDt" type="SspProprietaryData">
+				<xs:annotation>
+					<xs:documentation>SSP proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryMessage">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader1"/>
+			<xs:element name="PrtryData" type="ProprietaryData">
+				<xs:annotation>
+					<xs:documentation>proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Requestor">
+		<xs:sequence>
+			<xs:element name="BIC" type="BICIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SspProprietaryData">
+		<xs:sequence>
+			<xs:element name="TskQryDef" type="TaskQueryDefinition">
+				<xs:annotation>
+					<xs:documentation>task queue query</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaskCriteria">
+		<xs:sequence>
+			<xs:element name="SchCrit" type="TaskSearchCriteria">
+				<xs:annotation>
+					<xs:documentation>search criteria</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaskCriteriaDefinition">
+		<xs:sequence>
+			<xs:element name="NewCrit" type="TaskCriteria">
+				<xs:annotation>
+					<xs:documentation>new query definition</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaskIdentificationSearchCriteria">
+		<xs:sequence>
+			<xs:element name="RltdRef" type="AdditionalReferences">
+				<xs:annotation>
+					<xs:documentation>task identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaskQueryDefinition">
+		<xs:sequence>
+			<xs:element name="TskCrit" type="TaskCriteriaDefinition" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>task criteria</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaskSearchCriteria">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="TskId" type="TaskIdentificationSearchCriteria" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>task identification</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TskSts" type="TaskStatus" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>task status</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="Reqr" type="Requestor" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>requestor used on behalf of third parties</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TaskStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="toConfirm"/>
+			<xs:enumeration value="waiting"/>
+			<xs:enumeration value="processing"/>
+			<xs:enumeration value="revoked"/>
+			<xs:enumeration value="rejected"/>
+			<xs:enumeration value="completed"/>
+			<xs:enumeration value="pending"/>
+			<xs:enumeration value="partiallyPending"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.019.001.03" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.019.001.03" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="BusinessDayInformation">
+		<xs:sequence>
+			<xs:element name="BizDayInfRpt" type="BusinessDayInformationReport" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>business-day information report</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BusinessDayInformationDetails">
+		<xs:sequence>
+			<xs:element name="SysSts" type="SystemStatusDetails" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>system status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SysInfPerCcy" type="SystemAvailabilityAndEventsDetails" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>system information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BusinessDayInformationReport">
+		<xs:sequence>
+			<xs:element name="SysId" type="SystemIdentification">
+				<xs:annotation>
+					<xs:documentation>system identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BizDayInf" type="BusinessDayInformationDetails">
+				<xs:annotation>
+					<xs:documentation>business day information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateTimePeriodChoice">
+		<xs:sequence>
+			<xs:element name="FrDtTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>from date/time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateTimePeriodDetails">
+		<xs:sequence>
+			<xs:element name="FrDtTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>from date/time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ToDtTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>to date/time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="RtrBizDayInf" type="ReturnBusinessDayInformation">
+				<xs:annotation>
+					<xs:documentation>return business-day information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorCode">
+		<xs:sequence>
+			<xs:element name="Prtry" type="Max4AlphaNumericText">
+				<xs:annotation>
+					<xs:documentation>XML error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling">
+		<xs:sequence>
+			<xs:element name="Err" type="ErrorCode">
+				<xs:annotation>
+					<xs:documentation>error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Desc" type="Max140Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageIdentification">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QueryReference">
+		<xs:sequence>
+			<xs:element name="QryRef" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>query reference - message identification of the related request</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReturnBusinessDayInformation">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageIdentification">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BizQryRef" type="QueryReference">
+				<xs:annotation>
+					<xs:documentation>reference to the query</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="OprlErr" type="ErrorHandling">
+					<xs:annotation>
+						<xs:documentation>technical error report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="BizRpt" type="BusinessDayInformation">
+					<xs:annotation>
+						<xs:documentation>business report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SystemAvailabilityAndEventsDetails">
+		<xs:sequence>
+			<xs:element name="SysCcy" type="CurrencyCode">
+				<xs:annotation>
+					<xs:documentation>always "EUR"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SsnPrd" type="TimePeriodDetails" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>session period</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Evt" type="SystemEvent" minOccurs="5" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation>event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SystemEvent">
+		<xs:sequence>
+			<xs:element name="Tp" type="SystemEventType">
+				<xs:annotation>
+					<xs:documentation>system event type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SchdldTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>scheduled time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FctvTm" type="ISODateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>effective time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SystemEventType">
+		<xs:sequence>
+			<xs:element name="Cd" type="SystemEventTypeCode">
+				<xs:annotation>
+					<xs:documentation>system event type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SystemIdentification">
+		<xs:sequence>
+			<xs:element name="Ctry" type="CountryCode">
+				<xs:annotation>
+					<xs:documentation>country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SystemStatusDetails">
+		<xs:sequence>
+			<xs:element name="Sts" type="SystemStatusCode">
+				<xs:annotation>
+					<xs:documentation>system status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VldtyTm" type="DateTimePeriodChoice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>validity time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TimePeriodDetails">
+		<xs:sequence>
+			<xs:element name="FrTm" type="ISOTime">
+				<xs:annotation>
+					<xs:documentation>from time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ToTm" type="ISOTime">
+				<xs:annotation>
+					<xs:documentation>to time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{2,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CashClearingSystemCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TGT">
+				<xs:annotation>
+					<xs:documentation>SSP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurrencyCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EUR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="ISOTime">
+		<xs:restriction base="xs:time"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max140Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="140"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SystemEventTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CRCO">
+				<xs:annotation>
+					<xs:documentation>cash reservation cut-off</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CUSC">
+				<xs:annotation>
+					<xs:documentation>customer cut-off</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ESTF">
+				<xs:annotation>
+					<xs:documentation>standing facilities cut-off</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IBKC">
+				<xs:annotation>
+					<xs:documentation>interbank cut-off</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="STDY">
+				<xs:annotation>
+					<xs:documentation>start of day</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SystemStatusCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ACTV">
+				<xs:annotation>
+					<xs:documentation>active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CLSD">
+				<xs:annotation>
+					<xs:documentation>closed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

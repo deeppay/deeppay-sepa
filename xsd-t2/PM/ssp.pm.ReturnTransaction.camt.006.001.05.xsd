@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 rel. 2 (http://www.altova.com) by 15 concurrent users of Z4 (DEUTSCHE BUNDESBANK) -->
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.006.001.05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.006.001.05" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AccountIdentification4Choice">
+		<xs:sequence>
+			<xs:element name="Othr" type="GenericAccountIdentification1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Amount">
+		<xs:sequence>
+			<xs:element name="AmtWthtCcy" type="ImpliedCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>amount in Euro</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BranchAndFinancialInstitutionIdentification5">
+		<xs:sequence>
+			<xs:element name="FinInstnId" type="FinancialInstitutionIdentification8"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashAccount23">
+		<xs:sequence>
+			<xs:element name="Id" type="AccountIdentification4Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashAccountAndEntry1">
+		<xs:sequence>
+			<xs:element name="Acct" type="CashAccount23">
+				<xs:annotation>
+					<xs:documentation>account identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ntry" type="CashEntry1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashEntry1">
+		<xs:sequence>
+			<xs:element name="Dt" type="DateAndDateTimeChoice" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateAndDateTimeChoice">
+		<xs:sequence>
+			<xs:element name="DtTm" type="ISODateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateTimePeriodChoice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="FrDtTm" type="ISODateTime">
+					<xs:annotation>
+						<xs:documentation>from date/time</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ToDtTm" type="ISODateTime">
+					<xs:annotation>
+						<xs:documentation>to date/time</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DtTmRg" type="DateTimePeriodDetails">
+					<xs:annotation>
+						<xs:documentation>date/time range</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateTimePeriodDetails">
+		<xs:sequence>
+			<xs:element name="FrDtTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>from date/time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ToDtTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>to date/time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="RtrTx" type="ReturnTransaction">
+				<xs:annotation>
+					<xs:documentation>return transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling1Choice">
+		<xs:sequence>
+			<xs:element name="Prtry" type="Max4AlphaNumericText">
+				<xs:annotation>
+					<xs:documentation>XML error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling3">
+		<xs:sequence>
+			<xs:element name="Err" type="ErrorHandling1Choice">
+				<xs:annotation>
+					<xs:documentation>error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Desc" type="Max140Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FinancialInstitutionIdentification8">
+		<xs:sequence>
+			<xs:element name="BICFI" type="BICFIIdentifier" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GenericAccountIdentification1">
+		<xs:sequence>
+			<xs:element name="Id" type="Max34Text">
+				<xs:annotation>
+					<xs:documentation>account number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageHeader5">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrgnlBizQry" type="OriginalBusinessQuery1"/>
+			<xs:element name="QryNm" type="Max35Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>query name - reference for subsequent queries</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OriginalBusinessQuery1">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>query reference - message identification of the related request</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentIdentification4Choice">
+		<xs:sequence>
+			<xs:element name="PrtryId" type="Max16NumericText">
+				<xs:annotation>
+					<xs:documentation>SSP booking id</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentInstruction1">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max16NumericText" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>SSP business case id</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sts" type="PaymentStatus1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>payment status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InstdAmt" type="Amount" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>amount</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PmtMtd" type="PaymentOrigin1Choice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>payment method</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Prty" type="PriorityCodeChoice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>priority</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrcgVldtyTm" type="DateTimePeriodChoice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>payments with debit time indicator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InstrCpy" type="Max10000Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>FIN/XML message. Remark: XML messages are enclosed in a CDATA section.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Tp" type="PaymentType3Choice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>payment type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TxId" type="Max16Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>FIN: TRN</xs:documentation>
+					<xs:documentation>ASI: instruction identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IntrBkSttlmDt" type="ISODate" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>execution date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndToEndId" type="Max16Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>FIN: F21, related reference</xs:documentation>
+					<xs:documentation>ASI: end to end identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Pties" type="PaymentTransactionParty2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>SWIFT fields</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentOrigin1Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="FINMT" type="FINMessageType">
+					<xs:annotation>
+						<xs:documentation>SWIFT message type</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Prtry" type="ProprietaryPaymentOriginType">
+					<xs:annotation>
+						<xs:documentation>proprietary type of the payment origin</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentStatus1">
+		<xs:sequence>
+			<xs:element name="Cd" type="PaymentStatusCode5Choice" minOccurs="0"/>
+			<xs:element name="DtTm" type="DateAndDateTimeChoice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>settlement time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Rsn" type="PaymentStatusReasonCode5Choice" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentStatusCode5Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Pdg" type="PendingStatus4Code">
+					<xs:annotation>
+						<xs:documentation>pending status</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Fnl" type="FinalStatus1Code">
+					<xs:annotation>
+						<xs:documentation>final status</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentStatusReasonCode5Choice">
+		<xs:sequence>
+			<xs:element name="PrtryRjctn" type="ProprietaryStatusJustification">
+				<xs:annotation>
+					<xs:documentation>rejection reason</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentTransactionParty2">
+		<xs:sequence>
+			<xs:element name="DbtrAgt" type="BranchAndFinancialInstitutionIdentification5" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>F52, ordering institution</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InstdRmbrsmntAgt" type="BranchAndFinancialInstitutionIdentification5" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>F54, receivers correspondent</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IntrmyAgt" type="BranchAndFinancialInstitutionIdentification5" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>F56, intermediary institution</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CdtrAgt" type="BranchAndFinancialInstitutionIdentification5" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>F57, account with institution</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Cdtr" type="BranchAndFinancialInstitutionIdentification5" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>F58, beneficiary institution</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentType3Choice">
+		<xs:sequence>
+			<xs:element name="Prtry" type="ProprietaryPaymentType">
+				<xs:annotation>
+					<xs:documentation>proprietary payment type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PriorityCodeChoice">
+		<xs:sequence>
+			<xs:element name="Cd" type="Priority1Code">
+				<xs:annotation>
+					<xs:documentation>code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryStatusJustification">
+		<xs:sequence>
+			<xs:element name="PrtryStsRsn" type="Max4AlphaNumericText">
+				<xs:annotation>
+					<xs:documentation>error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Rsn" type="Max256Text">
+				<xs:annotation>
+					<xs:documentation>error text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReturnTransaction">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader5"/>
+			<xs:element name="RptOrErr" type="TransactionReportOrError1Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="System1">
+		<xs:sequence>
+			<xs:element name="MmbId" type="BranchAndFinancialInstitutionIdentification5" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>BIC</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Transaction12">
+		<xs:sequence>
+			<xs:element name="PmtTo" type="System1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>receiver</xs:documentation>
+					<xs:documentation>or BIC of the AS in case of ASXML payments</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PmtFr" type="System1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>sender</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CdtDbtInd" type="CreditDebitCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>credit/debit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Pmt" type="PaymentInstruction1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>payment details</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AcctNtry" type="CashAccountAndEntry1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>account entry</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionOrError1Choice">
+		<xs:sequence>
+			<xs:element name="Tx" type="Transaction12">
+				<xs:annotation>
+					<xs:documentation>transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionReport1">
+		<xs:sequence>
+			<xs:element name="PmtId" type="PaymentIdentification4Choice">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of a payment</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TxOrErr" type="TransactionOrError1Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionReportOrError1Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="BizRpt" type="Transactions5">
+					<xs:annotation>
+						<xs:documentation>business report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OprlErr" type="ErrorHandling3">
+					<xs:annotation>
+						<xs:documentation>technical error report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Transactions5">
+		<xs:sequence>
+			<xs:element name="TxRpt" type="TransactionReport1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICFIIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CreditDebitCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CRDT">
+				<xs:annotation>
+					<xs:documentation>credits</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DBIT">
+				<xs:annotation>
+					<xs:documentation>debits</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FinalStatus1Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CAND">
+				<xs:annotation>
+					<xs:documentation>revoked</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RJTD">
+				<xs:annotation>
+					<xs:documentation>rejected</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="STLD">
+				<xs:annotation>
+					<xs:documentation>settled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FINMessageType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="103"/>
+			<xs:enumeration value="202"/>
+			<xs:enumeration value="204"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:fractionDigits value="2"/>
+			<xs:totalDigits value="18"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max10000Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max140Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="140"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max16NumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,16}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max16Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max256Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max34Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="34"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PendingStatus4Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ACPD">
+				<xs:annotation>
+					<xs:documentation>warehoused</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PSTL">
+				<xs:annotation>
+					<xs:documentation>pending</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="STLE">
+				<xs:annotation>
+					<xs:documentation>earmarked</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="STLM">
+				<xs:annotation>
+					<xs:documentation>information period</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Priority1Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HIGH">
+				<xs:annotation>
+					<xs:documentation>SSP highly urgent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LOWW">
+				<xs:annotation>
+					<xs:documentation>SSP normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NORM">
+				<xs:annotation>
+					<xs:documentation>SSP urgent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProprietaryPaymentOriginType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ASXML">
+				<xs:annotation>
+					<xs:documentation>Bookings stemming from incoming AS XML payments</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="T2SXML">
+				<xs:annotation>
+					<xs:documentation>Bookings stemming from incoming T2S XML payments</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INTERN">
+				<xs:annotation>
+					<xs:documentation>Bookings stemming from internal messages</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ORDER">
+				<xs:annotation>
+					<xs:documentation>Bookings stemming from current orders sent via ICM</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProprietaryPaymentType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ASYP">
+				<xs:annotation>
+					<xs:documentation>ancillary system payments</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BACP">
+				<xs:annotation>
+					<xs:documentation>backup payments</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BIDB">
+				<xs:annotation>
+					<xs:documentation>billing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CONP">
+				<xs:annotation>
+					<xs:documentation>connected payments</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INTP">
+				<xs:annotation>
+					<xs:documentation>interests</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LIQP">
+				<xs:annotation>
+					<xs:documentation>liquidity transfers</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MANP">
+				<xs:annotation>
+					<xs:documentation>mandated payments</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PDDB">
+				<xs:annotation>
+					<xs:documentation>penalties</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="REGP">
+				<xs:annotation>
+					<xs:documentation>regular payments</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="T2SL">
+				<xs:annotation>
+					<xs:documentation>liquidity transfers between T2 and T2S</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

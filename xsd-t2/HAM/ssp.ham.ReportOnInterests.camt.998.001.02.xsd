@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.998.001.02" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.998.001.02" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AccountIdentification">
+		<xs:sequence>
+			<xs:element name="BIC" type="BICIdentifier">
+				<xs:annotation>
+					<xs:documentation>BIC</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Amount">
+		<xs:sequence>
+			<xs:element name="AmtWthtCcy" type="ImpliedCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>amount in Euro</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="PrtryMsg" type="ProprietaryMessageV02"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InterestReport">
+		<xs:sequence>
+			<xs:element name="DbtAcct" type="AccountIdentification">
+				<xs:annotation>
+					<xs:documentation>debited account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CdtAcct" type="AccountIdentification">
+				<xs:annotation>
+					<xs:documentation>credited account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrcgVldtyDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>settlement date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Amt" type="Amount">
+				<xs:annotation>
+					<xs:documentation>amount</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageReference">
+		<xs:sequence>
+			<xs:element name="Ref" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData">
+		<xs:sequence>
+			<xs:element name="Tp" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>always "ReportOnInterests"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SspPrtryDt" type="SspProprietaryData">
+				<xs:annotation>
+					<xs:documentation>SSP proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryMessageV02">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageReference">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrtryData" type="ProprietaryData">
+				<xs:annotation>
+					<xs:documentation>proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SspProprietaryData">
+		<xs:sequence>
+			<xs:element name="Ctry" type="CountryCode">
+				<xs:annotation>
+					<xs:documentation>country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RptValDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>report date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NbOfItms" type="Number">
+				<xs:annotation>
+					<xs:documentation>current number of the item</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TotNbOfItms" type="Number">
+				<xs:annotation>
+					<xs:documentation>total number of items</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IntrstRpt" type="InterestReport" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>interest report</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{2,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:fractionDigits value="2"/>
+			<xs:totalDigits value="18"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Number">
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="0"/>
+			<xs:totalDigits value="18"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

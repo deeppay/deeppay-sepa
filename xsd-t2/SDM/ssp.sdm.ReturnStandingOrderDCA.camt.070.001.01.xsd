@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 rel. 2 (http://www.altova.com) by 15 concurrent users of Z4 (DEUTSCHE BUNDESBANK) -->
+<!--This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com-->
+<xs:schema xmlns="urn:swift:xsd:camt.070.001.01" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.070.001.01" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AccountIdentification4Choice">
+		<xs:sequence>
+			<xs:element name="Othr" type="GenericAccountIdentification1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Amount2Choice">
+		<xs:sequence>
+			<xs:element name="AmtWthtCcy" type="ImpliedCurrencyAndAmount"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashAccount24">
+		<xs:sequence>
+			<xs:element name="Id" type="AccountIdentification4Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="RtrStgOrdr" type="ReturnStandingOrderV01"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling1Choice">
+		<xs:sequence>
+			<xs:element name="Prtry" type="Max4AlphaNumericText"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling3">
+		<xs:sequence>
+			<xs:element name="Err" type="ErrorHandling1Choice"/>
+			<xs:element name="Desc" type="Max140Text" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GenericAccountIdentification1">
+		<xs:sequence>
+			<xs:element name="Id" type="Max34Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GenericFinancialIdentification1">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GenericIdentification1">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageHeader6">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text"/>
+			<xs:element name="OrgnlBizQry" type="OriginalBusinessQuery1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OriginalBusinessQuery1">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReturnStandingOrderV01">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader6"/>
+			<xs:element name="RptOrErr" type="StandingOrderOrError1Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StandingOrder2">
+		<xs:sequence>
+			<xs:element name="Amt" type="Amount2Choice"/>
+			<xs:element name="CdtDbtInd" type="CreditDebitCode"/>
+			<xs:element name="CdtrAcct" type="CashAccount24"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StandingOrder3">
+		<xs:sequence>
+			<xs:element name="StgOrdrId" type="StandingOrderIdentification2"/>
+			<xs:element name="StgOrdrOrErr" type="StandingOrderOrError2Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StandingOrderIdentification2">
+		<xs:sequence>
+			<xs:element name="Acct" type="CashAccount24"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StandingOrderOrError1Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Rpt" type="StandingOrder3" minOccurs="1" maxOccurs="unbounded"/>
+				<xs:element name="OprlErr" type="ErrorHandling3" minOccurs="1"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StandingOrderOrError2Choice">
+		<xs:sequence>
+			<xs:element name="StgOrdr" type="StandingOrder2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CreditDebitCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DBIT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="5"/>
+			<xs:totalDigits value="18"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max140Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="140"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max34Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="34"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="4"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

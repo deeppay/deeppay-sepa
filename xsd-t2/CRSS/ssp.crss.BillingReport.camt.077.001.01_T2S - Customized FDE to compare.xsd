@@ -1,0 +1,865 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="urn:iso:std:iso:20022:tech:xsd:DRAFT3camt.077.001.01" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:iso:std:iso:20022:tech:xsd:DRAFT3camt.077.001.01" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document">
+		<xs:annotation>
+			<xs:documentation source="T2S-Use">16/05/2012</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AccountIdentification20Choice">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">AccountIdentification20Choice</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Unique identification of the securities account or the cash account owned by the customer.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="CshAcctId" type="AccountIdentification4Choice">
+					<xs:annotation>
+						<xs:documentation source="Name" xml:lang="EN">CashAccountIdentification</xs:documentation>
+						<xs:documentation source="Definition" xml:lang="EN">Unique identification of the cash account, as assigned by the account servicer.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccountIdentification4Choice">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">AccountIdentification4Choice</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies the unique identification of an account as assigned by the account servicer.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Othr" type="GenericAccountIdentification1">
+					<xs:annotation>
+						<xs:documentation source="Name" xml:lang="EN">Other</xs:documentation>
+						<xs:documentation source="Definition" xml:lang="EN">Unique identification of an account, as assigned by the account servicer, using an identification scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICFIIdentifier">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">BICFIIdentifier</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Code allocated to a financial institution by the ISO 9362 Registration Authority as described in ISO 9362 "Banking - Banking telecommunication messages - Business identifier code (BIC)".</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="BillingCancellationReport1">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">BillingCancellationReport1</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Report on cancelled billing data.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RgltryData" type="InvoiceLegalIssue1_T2S1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">RegulatoryData</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Information about legal and regulatory data exchanged between invoicing and paying party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InvcDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">InvoiceDate</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Date at which the billing report was created.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BllgId" type="RestrictedFINXMax16Text">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">BillingIdentification</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Identification of the billing report.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BllgPrd" type="DatePeriodDetails">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">BillingPeriod</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Date period which for which the report data is valid.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CxlRsn" type="CancellationReason16Choice">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">CancellationReason</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Reason why requested billing information is cancelled.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BillingReport1">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">BillingReport1</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Report on specific billing data.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RgltryData" type="InvoiceLegalIssue1">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">RegulatoryData</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Information about legal and regulatory data exchanged between invoicing and paying party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InvcDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">InvoiceDate</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Date at which the billing report was created.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BllgId" type="RestrictedFINXMax16Text">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">BillingIdentification</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Unique identification of the billing report.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BllgPrd" type="DatePeriodDetails">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">BillingPeriod</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Date period for which the report data is valid.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CSDOrNCB" type="CSDOrNCB1Choice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">CSDOrNCB</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Specifies the billed party either CSD or NCB (party identification of the CSD or NCB  which has a contractual relationship with the billed customer)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InvcTtls" type="InvoiceTotals2">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">InvoiceTotals</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Specifies totals related to the invoice.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SvcCtgyTtls" type="ServiceCategoryTotals1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">ServiceCategoryTotals</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Specifies totals related to the service category.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BillingReportOrError1Choice">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">BillingReportOrError1Choice</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Choice between report on billing data, billing cancellation request details or operational error.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="BllgRpt" type="BillingReport1">
+					<xs:annotation>
+						<xs:documentation source="Name" xml:lang="EN">BillingReport</xs:documentation>
+						<xs:documentation source="Definition" xml:lang="EN">Report on billing data.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BillingReportV01">
+		<xs:annotation>
+			<xs:documentation source="Definition">
+The BillingReport message is exchanged between the system transaction administrator and a system member. It aims at informing about data providing cumulative or itemised details backing an invoice at the end ofor during the billing period or about the cancellation of the invoice data. 
+
+
+
+Usage:
+
+The cumulative BillingReport is based on an event (such as start of day-time phase of the first business day after the end of the billing period). In case of cancellation of an invoice the cumulative invoice will be pushed out initiated by operator request.
+
+The Cumulative Invoice will consist of the following:
+
+- Sum of the total number of units per service item for each CSD or CB;
+
+- Sum of the amounts (excl. VAT) based on the total number of units per service item for each CSD or CB;
+
+- Calculation of the VAT amount and total amount (incl. VAT) based on the total number of units per service item;
+
+- Cancellation status of the invoice data.
+
+
+
+The BillingReport message is also used to inform the system member about details backing an invoice.
+
+This can be via cumulative billing data or itemised billing data as response to a invoice query message.
+      </xs:documentation>
+			<xs:documentation source="Name" xml:lang="EN">BillingReportV01</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">
+The BillingReport message is exchanged between the system transaction administrator and a system member. It aims at informing about data providing cumulative or itemised details backing an invoice at the end ofor during the billing period or about the cancellation of the invoice data.
+
+
+
+Usage:
+
+The cumulative BillingReport is based on an event (such as start of day-time phase of the first business day after the end of the billing period). In case of cancellation of an invoice the cumulative invoice will be pushed out initiated by operator request.
+
+
+
+The Cumulative Invoice will consist of the following:
+
+- Sum of the total number of units per service item for each CSD or NCB;
+
+- Sum of the amounts (excl. VAT) based on the total number of units per service item for each CSD or NCB;
+
+- Calculation of the VAT amount and total amount (incl. VAT) based on the total number of units per service item;
+
+- Cancellation status of the invoice data.
+
+
+
+The BillingReport message is also used to inform the system member about details backing an invoice.
+
+This can be via cumulative billing data or itemised billing data as response to a invoice query message.
+      </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader3">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">MessageHeader</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Defines the characteristics specific to the message, such as the identification or the creation date and time.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BllgRptOrErrChc" type="BillingReportOrError1Choice">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">BillingReportOrError</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Report on billing data or operational error.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CancellationReason16Choice">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">CancellationReason16Choice</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies the reason for the cancellation request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Prtry" type="RestrictedFINXMax35Text">
+					<xs:annotation>
+						<xs:documentation source="Name" xml:lang="EN">Proprietary</xs:documentation>
+						<xs:documentation source="Definition" xml:lang="EN">Reason for the cancellation request, in a proprietary form.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactDetails2">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">ContactDetails2</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Communication device number or electronic address used for communication.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PhneNb" type="PhoneNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">PhoneNumber</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Collection of information that identifies a phone number, as defined by telecom services.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EmailAdr" type="RestrictedFINMax2048Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">EmailAddress</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Address for electronic mail (e-mail).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CountryCode">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">CountryCode</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Code to identify a country, a dependency, or another area of particular geopolitical interest, on the basis of country names obtained from the United Nations (ISO 3166, Alpha-2 code).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{2,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CSDOrNCB1Choice">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">CSDOrNCB1Choice</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Choice between a central securities depositary or a national central bank for querying party reference data.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="NCBId" type="BICFIIdentifier">
+					<xs:annotation>
+						<xs:documentation source="Name" xml:lang="EN">NCBIdentification</xs:documentation>
+						<xs:documentation source="Definition" xml:lang="EN">Unique identification to unambiguously identify the national central bank within the system.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatePeriodDetails">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">DatePeriodDetails</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Range of time defined by a start date and an end date.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FrDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">FromDate</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Start date of the range.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ToDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">ToDate</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">End date of the range.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="BllgRpt" type="BillingReportV01"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling1Choice">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">ErrorHandling1Choice</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies the choice between the listed and the proprietary error codes.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Prtry" type="Max4AlphaNumericText">
+					<xs:annotation>
+						<xs:documentation source="Name" xml:lang="EN">Proprietary</xs:documentation>
+						<xs:documentation source="Definition" xml:lang="EN">Specification of the error, in free format.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling3">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">ErrorHandling3</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies the error resulting from the processing of a request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Err" type="ErrorHandling1Choice">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Error</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Specification of the error, in coded or proprietary form.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Desc" type="RestrictedFINMax140Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Description</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Specification of the error, in free format.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GenericAccountIdentification1">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">GenericAccountIdentification1</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Information related to a generic account identification.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Id" type="RestrictedFINX2Max34Text">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Identification</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Identification assigned by an institution.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GenericIdentification1">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">GenericIdentification1</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Information related to an identification, eg, party identification or account identification.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Id" type="QueryType2Code_T2S_5">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Identification</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Identification assigned by an institution.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InvoiceLegalIssue1">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">InvoiceLegalIssue1</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Information supplied to enable the matching/reconciliation of an entry with the items that the payment is intended to settle, such as commercial invoices in an accounts' receivable system, in a structured form.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Invcr" type="PartyIdentification43_T2S_1">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Invoicer</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Identification of the organisation issuing the invoice, when it is different from the creditor or ultimate creditor.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Invcee" type="PartyIdentification43_T2S_2">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Invoicee</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Identification of the party to whom an invoice is issued, when it is different from the debtor or ultimate debtor.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InvoiceLegalIssue1_T2S1">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">InvoiceLegalIssue1</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Information supplied to enable the matching/reconciliation of an entry with the items that the payment is intended to settle, such as commercial invoices in an accounts' receivable system, in a structured form.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Invcr" type="PartyIdentification43_T2S_1">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Invoicer</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Identification of the organisation issuing the invoice, when it is different from the creditor or ultimate creditor.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Invcee" type="PartyIdentification43_T2S_2">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Invoicee</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Identification of the party to whom an invoice is issued, when it is different from the debtor or ultimate debtor.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InvoiceTotals2">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">InvoiceTotals1</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies totals related to the invoice.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TtlInvcAmt" type="RestrictedFINActiveCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">TotalInvoiceAmount</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Total amount of the invoice, being the sum of total invoice lines amounts, total invoice adjustment amount (discounts, allowances and charges) and total tax amounts.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ISODate">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">ISODate</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">A particular point in the progression of time in a calendar year expressed in the YYYY-MM-DD format. This representation is defined in "XML Schema Part 2: Datatypes Second Edition - W3C Recommendation 28 October 2004" which is aligned with ISO 8601.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">Max4AlphaNumericText</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies an alphanumeric string with a maximum length of 4 characters.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="4"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText_T2S_6">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">Max4AlphaNumericText</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies an alphanumeric string with a maximum length of 4 characters.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+			<xs:enumeration value="ACMS">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Account management services</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Service item group: Account management services</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INSV">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Information services</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Service item group: information services</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SETT">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Settlement services</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Service item group: Settlement services</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MessageHeader3">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">MessageHeader3</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Set of characteristics, such as the identification or the creation date and time, specific to the message.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MsgId" type="RestrictedFINXMax16Text">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">MessageIdentification</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">
+Point to point reference, as assigned by the sender, to unambiguously identify the message.
+Usage: The sender has to make sure that MessageIdentification is unique for a pre-agreed period.
+          </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReqTp" type="RequestType2Choice">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">RequestType</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Specific actions to be executed through the request.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Number">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">Number</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Number of objects represented as an integer.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="18"/>
+			<xs:fractionDigits value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="OriginalBusinessQuery1">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">OriginalBusinessQuery1</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Unique identification, as assigned by the original requestor, to unambiguously identify the business query message.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MsgId" type="RestrictedFINXMax16Text">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">MessageIdentification</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Point to point reference, as assigned by the original initiating party, to unambiguously identify the original query message.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PartyIdentification43_T2S_1">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">PartyIdentification32</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Set of elements used to identify a person or an organisation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Nm" type="RestrictedFINMax140Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Name</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Name by which a party is known and which is usually used to identify that party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PstlAdr" type="PostalAddress6" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">PostalAddress</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Information that locates and identifies a specific address, as defined by postal services.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CtctDtls" type="ContactDetails2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">ContactDetails</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Set of elements used to indicate how to contact the party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PartyIdentification43_T2S_2">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">PartyIdentification32</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Set of elements used to identify a person or an organisation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Nm" type="RestrictedFINMax140Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Name</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Name by which a party is known and which is usually used to identify that party.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PstlAdr" type="PostalAddress6" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">PostalAddress</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Information that locates and identifies a specific address, as defined by postal services.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentMethod1Choice">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">PaymentMethod1Choice</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Method of payment for the remittance of the CSD or the NCB to the invoicing party.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Prtry" type="RestrictedFINMax210Text">
+					<xs:annotation>
+						<xs:documentation source="Name" xml:lang="EN">Proprietary</xs:documentation>
+						<xs:documentation source="Definition" xml:lang="EN">Method of payment for the remittance of the CSD or the NCB to the invoicing party, in a proprietary free text format.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PhoneNumber">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">PhoneNumber</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">
+The collection of information which identifies a specific phone or FAX number as defined by telecom services.
+It consists of a "+" followed by the country code (from 1 to 3 characters) then a "-" and finally, any combination of numbers, "(", ")", "+" and "-" (up to 30 characters).
+      </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\+[0-9]{1,3}-[0-9()+\-]{1,30}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PostalAddress6">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">PostalAddress6</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Information that locates and identifies a specific address, as defined by postal services.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StrtNm" type="RestrictedFINXMax70Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">StreetName</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Name of a street or thoroughfare.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BldgNb" type="RestrictedFINXMax16Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">BuildingNumber</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Number that identifies the position of a building on a street.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PstCd" type="RestrictedFINXMax16Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">PostCode</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TwnNm" type="RestrictedFINXMax35Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">TownName</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Name of a built-up area, with defined boundaries, and a local government.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CtrySubDvsn" type="RestrictedFINXMax35Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">CountrySubDivision</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Identifies a subdivision of a country such as state, region, county.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ctry" type="CountryCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Country</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Nation with its own government.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="QueryType2Code_T2S_5">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">Max35Text</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies a character string with a maximum length of 35 characters.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:enumeration value="CANC">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Cancellation</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Invoice Cancellation Report</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CUMU">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Cumulative Billing Data</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Cumulative Billing Data Report</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INVC">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Cumulative Invoice</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Cumulative Invoice</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ITEM">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Itemised Billing Data</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Itemised Billing Data Report</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="RequestType2Choice">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">RequestType2Choice</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Defines the type of action to be performed in the request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Prtry" type="GenericIdentification1">
+					<xs:annotation>
+						<xs:documentation source="Name" xml:lang="EN">Proprietary</xs:documentation>
+						<xs:documentation source="Definition" xml:lang="EN">Request type is in proprietary format.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RestrictedFINActiveCurrencyAndAmount">
+		<xs:annotation>
+			<xs:documentation>RestrictedFINActiveCurrencyAndAmount</xs:documentation>
+			<xs:documentation>A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="RestrictedFINActiveCurrencyAndAmount_SimpleType"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="RestrictedFINActiveCurrencyAndAmount_SimpleType">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:totalDigits value="14"/>
+			<xs:fractionDigits value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINMax140Text">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">Max140Text</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies a character string with a maximum length of 140 characters.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="140"/>
+			<xs:pattern value="[0-9a-zA-Z/\-\?:\(\)\.,&apos;\+ ]{1,140}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINMax2048Text">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">Max210Text</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies a character string with a maximum length of 350 characters.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2048"/>
+			<xs:pattern value="[0-9a-zA-Z/\-\?:\(\)\.,&apos;\+ ]{1,2048}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINMax210Text">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">Max210Text</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies a character string with a maximum length of 350 characters.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="210"/>
+			<xs:pattern value="[0-9a-zA-Z/\-\?:\(\)\.,&apos;\+ ]{1,210}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINX2Max34Text">
+		<xs:annotation>
+			<xs:documentation>RestrictedFINX2Max34Text</xs:documentation>
+			<xs:documentation>Specifies a character string with a maximum length of 34 characters limited to character set X, that is, a-z A-Z / - ? : ( ) . , ‘ + .</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="34"/>
+			<xs:pattern value="[0-9a-zA-Z/\-\?:\(\)\.,&apos;\+ ]{1,34}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINXMax16Text">
+		<xs:annotation>
+			<xs:documentation>RestrictedFINXMax16Text</xs:documentation>
+			<xs:documentation>Specifies a character string with a maximum length of 16 characters. It has a pattern that disables the use of characters that is not part of the character set X, that is, that is not a-z A-Z / - ? : ( ) . , ‘ + , and disable the use of slash "/" at the beginning and end of line and double slash "//" within the line.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="16"/>
+			<xs:pattern value="([0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ]([0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ]*(/[0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ])?)*)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINXMax35Text">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">RestrictedFINXMax35Text</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies a character string with a maximum length of 35 characters limited to character set X, that is, a-z A-Z / - ? : ( ) . , ‘ + .</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+			<xs:pattern value="[0-9a-zA-Z/\-\?:\(\)\.,&apos;\+ ]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINXMax70Text">
+		<xs:annotation>
+			<xs:documentation>RestrictedFINXMax35Text</xs:documentation>
+			<xs:documentation>Specifies a character string with a maximum length of 35 characters limited to character set X, that is, a-z A-Z / - ? : ( ) . , ‘ + .</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="70"/>
+			<xs:pattern value="[0-9a-zA-Z/\-\?:\(\)\.,&apos;\+ ]{1,35}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="SecuritiesAccount13">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">SecuritiesAccount13</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Account to or from which a securities entry is made.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Id" type="RestrictedFINXMax35Text">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Identification</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Unambiguous identification for the account between the account owner and the account servicer.”</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceCategoryTotals1">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">ServiceCategoryTotals1</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies totals related to the invoice.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AcctId" type="AccountIdentification20Choice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">AccountIdentification</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Unique identification of an securities account or cash account belonging to billed customer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BlldCstmrId" type="BICFIIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">BilledCustomerIdentification</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">BIC of the party which is invoiced by the CSD/NCB.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TtlInvcAmt" type="RestrictedFINActiveCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">TotalInvoiceAmount</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Total amount of the invoice, being the sum of total invoice lines amounts, total invoice adjustment amount (discounts, allowances and charges) and total tax amounts.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SvcCtgy" type="Max4AlphaNumericText_T2S_6">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">ServiceCategory</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Agreement under which or rules under which the transaction should be processed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SvcItmTtls" type="ServiceItemTotals1" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">ServiceItemTotals</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Specifies totals related to the invoice.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceItemTotals1">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">ServiceItemTotals1</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies totals related to the invoice.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ItmTp" type="Max4AlphaNumericText">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">ItemType</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Specifies a classification for the service items such as  query, report, securities account, etc…</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Qty" type="Number">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">Quantity</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Sum of total number units per service item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UnitPric" type="RestrictedFINActiveCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">UnitPrice</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Specifies the unit of the service item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TtlInvcAmt" type="RestrictedFINActiveCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">TotalInvoiceAmount</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Total amount of the invoice, being the sum of total invoice lines amounts, total invoice adjustment amount (discounts, allowances and charges) and total tax amounts.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.007.001.05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.007.001.05" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="BranchAndFinancialInstitutionIdentification5">
+		<xs:sequence>
+			<xs:element name="FinInstnId" type="FinancialInstitutionIdentification8"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="ModfyTx" type="ModifyTransaction"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FinancialInstitutionIdentification8">
+		<xs:sequence>
+			<xs:element name="BICFI" type="BICFIIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageHeader1">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ModifyTransaction">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader1"/>
+			<xs:element name="Mod" type="TransactionModification2">
+				<xs:annotation>
+					<xs:documentation>modification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentIdentification4Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="ShrtBizId" type="ShortPaymentIdentification1">
+					<xs:annotation>
+						<xs:documentation>short business identification</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PrtryId" type="Max43Text">
+					<xs:annotation>
+						<xs:documentation>SSP reference</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentInstruction2">
+		<xs:sequence>
+			<xs:element name="Prty" type="PriorityCodeChoice">
+				<xs:annotation>
+					<xs:documentation>priority</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PriorityCodeChoice">
+		<xs:sequence>
+			<xs:element name="PrtryCd" type="ProprietaryCode"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShortPaymentIdentification1">
+		<xs:sequence>
+			<xs:element name="TxId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>TRN</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IntrBkSttlmDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>execution date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InstgAgt" type="BranchAndFinancialInstitutionIdentification5">
+				<xs:annotation>
+					<xs:documentation>sender</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionModification2">
+		<xs:sequence>
+			<xs:element name="PmtId" type="PaymentIdentification4Choice">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of a payment</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NewPmtValSet" type="PaymentInstruction2">
+				<xs:annotation>
+					<xs:documentation>new value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICFIIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max43Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="43"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProprietaryCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DECR">
+				<xs:annotation>
+					<xs:documentation>decrease</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INCR">
+				<xs:annotation>
+					<xs:documentation>increase</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

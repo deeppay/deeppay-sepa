@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.998.001.02" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.998.001.02" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="BroadcastDetails">
+		<xs:sequence>
+			<xs:element name="Sndr" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>sender</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecvrInf" type="ReceiverInformation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>receiver information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Tp" type="BroadcastTypeCode">
+				<xs:annotation>
+					<xs:documentation>broadcast type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sbjt" type="Max140Text">
+				<xs:annotation>
+					<xs:documentation>subject</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SbjtDtls" type="Max770Text">
+				<xs:annotation>
+					<xs:documentation>text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DtTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>delivery date/time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sts" type="BroadcastStatusCode">
+				<xs:annotation>
+					<xs:documentation>broadcast status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExpDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>expiration date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BroadcastReport">
+		<xs:sequence>
+			<xs:element name="BrdDtls" type="BroadcastDetails">
+				<xs:annotation>
+					<xs:documentation>broadcast details</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Broadcasts">
+		<xs:sequence>
+			<xs:element name="BrdRpt" type="BroadcastReport" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>broadcast report</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="PrtryMsg" type="ProprietaryMessage">
+				<xs:annotation>
+					<xs:documentation>free format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorCode">
+		<xs:sequence>
+			<xs:element name="Prtry" type="Max4AlphaNumericText">
+				<xs:annotation>
+					<xs:documentation>XML error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling">
+		<xs:sequence>
+			<xs:element name="Err" type="ErrorCode">
+				<xs:annotation>
+					<xs:documentation>error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Desc" type="Max140Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageReference">
+		<xs:sequence>
+			<xs:element name="Ref" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData">
+		<xs:sequence>
+			<xs:element name="Tp" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>always "ReturnBroadcast"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SspPrtryDt" type="SspProprietaryData">
+				<xs:annotation>
+					<xs:documentation>SSP proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryMessage">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageReference">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Rltd" type="MessageReference">
+				<xs:annotation>
+					<xs:documentation>related reference - message identification of the related request</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrtryData" type="ProprietaryData">
+				<xs:annotation>
+					<xs:documentation>proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReceiverInformation">
+		<xs:sequence>
+			<xs:element name="RcvrDtls" type="ReceiverDetails" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>receiver details</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UsrRole" type="Max70Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>receiver's user role</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReceiverDetails">
+		<xs:choice>
+			<xs:element name="RspnsblCB" type="SystemIdentification">
+				<xs:annotation>
+					<xs:documentation>all participants of responsible CB</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ptcpt" type="BICIdentifier">
+				<xs:annotation>
+					<xs:documentation>participant BIC</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="SspProprietaryData">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="BizRpt" type="Broadcasts">
+					<xs:annotation>
+						<xs:documentation>business report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OprlErr" type="ErrorHandling">
+					<xs:annotation>
+						<xs:documentation>technical error report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SystemIdentification">
+		<xs:sequence>
+			<xs:element name="Ctry" type="CountryCode">
+				<xs:annotation>
+					<xs:documentation>country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BroadcastStatusCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RECV">
+				<xs:annotation>
+					<xs:documentation>received</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="READ">
+				<xs:annotation>
+					<xs:documentation>read</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TVAL">
+				<xs:annotation>
+					<xs:documentation>to validate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DELI">
+				<xs:annotation>
+					<xs:documentation>delivered</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BroadcastTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ALRT">
+				<xs:annotation>
+					<xs:documentation>alert</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NORM">
+				<xs:annotation>
+					<xs:documentation>normal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{2,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max10Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max140Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="140"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max70Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="70"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max770Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="770"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

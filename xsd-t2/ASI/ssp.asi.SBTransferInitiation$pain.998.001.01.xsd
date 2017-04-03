@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:$pain.998.001.01" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:$pain.998.001.01" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AccountIdentification">
+		<xs:sequence>
+			<xs:element name="DmstAcct" type="SimpleIdentificationInformation">
+				<xs:annotation>
+					<xs:documentation>account number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="pain.998.001.01" type="pain.998.001.01">
+				<xs:annotation>
+					<xs:documentation>free format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FinancialInstitutionIdentifciaton">
+		<xs:sequence>
+			<xs:element name="BIC" type="BICIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GenericPaymentTransaction">
+		<xs:sequence>
+			<xs:element name="PmtId" type="PaymentIdentification">
+				<xs:annotation>
+					<xs:documentation>payment identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Amt" type="InstructedAmount">
+				<xs:annotation>
+					<xs:documentation>instructed amount</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Cdtr" type="PartyIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>creditor</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CdtrAcct" type="AccountIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>creditor account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FnlAgt" type="FinancialInstitutionIdentifciaton">
+				<xs:annotation>
+					<xs:documentation>final agent</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RmtInf" type="RemittanceInformation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>remittance information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InstructedAmount">
+		<xs:sequence>
+			<xs:element name="InstAmt" type="ImpliedCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>amount in Euro</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageReference">
+		<xs:sequence>
+			<xs:element name="Ref" type="RestrictedFINXMax16Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="pain.998.001.01">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageReference">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrtryDt" type="ProprietaryData">
+				<xs:annotation>
+					<xs:documentation>proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PartyIdentification">
+		<xs:sequence>
+			<xs:element name="FI" type="FinancialInstitutionIdentifciaton">
+				<xs:annotation>
+					<xs:documentation>financial institution</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentIdentification">
+		<xs:sequence>
+			<xs:element name="EndToEndId" type="RestrictedFINXMax16Text">
+				<xs:annotation>
+					<xs:documentation>end-to-end identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentInformation">
+		<xs:sequence>
+			<xs:element name="Dbtr" type="PartyIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>debtor</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FrstAgt" type="FinancialInstitutionIdentifciaton">
+				<xs:annotation>
+					<xs:documentation>first agent</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PmtTx" type="GenericPaymentTransaction">
+				<xs:annotation>
+					<xs:documentation>payment transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData">
+		<xs:sequence>
+			<xs:element name="Tp" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>always "SBTransferInitiation"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SspPrtryDt" type="SspProprietaryData">
+				<xs:annotation>
+					<xs:documentation>SSP proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RemittanceInformation">
+		<xs:sequence>
+			<xs:element name="Ustrd" type="Max140FINCharacterText">
+				<xs:annotation>
+					<xs:documentation>unstructured</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SimpleIdentificationInformation">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35FINCharacterText"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SspProprietaryData">
+		<xs:sequence>
+			<xs:element name="PmtInf" type="PaymentInformation">
+				<xs:annotation>
+					<xs:documentation>payment information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FINCharacterSet">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(([A-Z]|[a-z]|[0-9]|[/]|[\-]|[?]|[:]|[(]|[)]|[.]|[,]|[']|[+]|[{]|[}]|[&#10;]|[&#13;]|[ ])*)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FINCharacterSet3">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(([A-Z]|[a-z]|[0-9]|[\-]|[?]|[:]|[(]|[)]|[.]|[,]|[']|[+]|[ ])*)">
+				<xs:annotation>
+					<xs:documentation>no slash, no CR LF, no curly brackets</xs:documentation>
+				</xs:annotation>
+			</xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minExclusive value="0"/>
+			<xs:maxExclusive value="1000000000000"/>
+			<xs:fractionDigits value="2"/>
+			<xs:totalDigits value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max140FINCharacterText">
+		<xs:restriction base="FINCharacterSet">
+			<xs:maxLength value="140"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINXMax16Text">
+		<xs:annotation>
+			<xs:documentation>RestrictedFINXMax16Text</xs:documentation>
+			<xs:documentation>Specifies a character string with a maximum length of 16 characters. It has a pattern that disables the use of characters that is not part of the character set X. That is, 0-9 a-z A-Z / - ? : ( ) . , ‘ + , and disable the use of slash "/" at the beginning and end of line and double slash "//" within the line.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="16"/>
+			<xs:pattern value="([0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ]([0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ]*(/[0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ])?)*)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35FINCharacterText">
+		<xs:restriction base="FINCharacterSet">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

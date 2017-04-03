@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 rel. 2 (http://www.altova.com) by 56 concurrent users / SMP-Expiration: 2013-11-30 (Deutsche Bundesbank) -->
+<!--This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com-->
+<xs:schema xmlns="urn:swift:xsd:camt.069.001.01" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.069.001.01" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AccountIdentification4Choice">
+		<xs:sequence>
+			<xs:element name="Othr" type="GenericAccountIdentification1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashAccount24">
+		<xs:sequence>
+			<xs:element name="Id" type="AccountIdentification4Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="GetStgOrdr" type="GetStandingOrderV01"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GenericAccountIdentification1">
+		<xs:sequence>
+			<xs:element name="Id" type="Max34Text">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">RTGS account number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetStandingOrderV01">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader4"/>
+			<xs:element name="StgOrdrQryDef" type="StandingOrderQuery1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageHeader4">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation source="Name" xml:lang="EN">unambigous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StandingOrderCriteria1">
+		<xs:sequence>
+			<xs:element name="SchCrit" type="StandingOrderSearchCriteria1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StandingOrderCriteria1Choice">
+		<xs:sequence>
+			<xs:element name="NewCrit" type="StandingOrderCriteria1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StandingOrderQuery1">
+		<xs:sequence>
+			<xs:element name="StgOrdrCrit" type="StandingOrderCriteria1Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StandingOrderSearchCriteria1">
+		<xs:sequence>
+			<xs:element name="Acct" type="CashAccount24"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Max34Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="34"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

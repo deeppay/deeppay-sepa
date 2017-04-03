@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 rel. 2 (http://www.altova.com) by 56 concurrent users / SMP-Expiration: 2013-11-30 (Deutsche Bundesbank) -->
+<!--This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com-->
+<xs:schema xmlns="urn:swift:xsd:camt.024.001.04" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.024.001.04" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AccountIdentification4Choice">
+		<xs:sequence>
+			<xs:element name="Othr" type="GenericAccountIdentification1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Amount2Choice">
+		<xs:sequence>
+			<xs:element name="AmtWthtCcy" type="ImpliedCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>amount in Euro</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BranchAndFinancialInstitutionIdentification5">
+		<xs:sequence>
+			<xs:element name="FinInstnId" type="FinancialInstitutionIdentification8"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashAccount24A">
+		<xs:sequence>
+			<xs:element name="Id" type="AccountIdentification4Choice"/>
+			<xs:element name="Tp" type="CashAccountType2Choice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>only used if order type is standing order dca</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashAccount24B">
+		<xs:sequence>
+			<xs:element name="Id" type="AccountIdentification4Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashAccountType2Choice">
+		<xs:sequence>
+			<xs:element name="Prtry" type="ExternalAccountIdentification1Code"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="ModfyStgOrdr" type="ModifyStandingOrder">
+				<xs:annotation>
+					<xs:documentation>modify standing order</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FinancialInstitutionIdentification8">
+		<xs:sequence>
+			<xs:element name="Othr" type="GenericFinancialIdentification1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GenericAccountIdentification1">
+		<xs:sequence>
+			<xs:element name="Id" type="Max34Text">
+				<xs:annotation>
+					<xs:documentation>account number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GenericFinancialIdentification1">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageHeader1">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ModifyStandingOrder">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader1"/>
+			<xs:element name="StgOrdrId" type="StandingOrderIdentification2">
+				<xs:annotation>
+					<xs:documentation>standing order identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NewStgOrdrValSet" type="StandingOrder1">
+				<xs:annotation>
+					<xs:documentation>new value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StandingOrder1">
+		<xs:sequence>
+			<xs:element name="Amt" type="Amount2Choice"/>
+			<xs:element name="CdtrAcct" type="CashAccount24B"/>
+			<xs:element name="Frqcy" type="Frequency2Code"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StandingOrderIdentification2">
+		<xs:sequence>
+			<xs:element name="Acct" type="CashAccount24A"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ExternalAccountIdentification1Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CREA"/>
+			<xs:enumeration value="UPDA"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Frequency2Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DAIL">
+				<xs:annotation>
+					<xs:documentation>daylight processing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OVNG">
+				<xs:annotation>
+					<xs:documentation>overnight processing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:maxExclusive value="1000000000000"/>
+			<xs:fractionDigits value="2"/>
+			<xs:totalDigits value="18"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max34Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="34"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

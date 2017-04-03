@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.025.001.03" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.025.001.03" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="Rct" type="ReceiptV03">
+				<xs:annotation>
+					<xs:documentation>Receipt</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageHeader2">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>MessageIdentification - Point to point reference, as assigned by the sender, to unambiguously identify the message.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OriginalMessageAndIssuer1">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>MessageIdentification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Receipt1">
+		<xs:sequence>
+			<xs:element name="OrgnlMsgId" type="OriginalMessageAndIssuer1">
+				<xs:annotation>
+					<xs:documentation>OriginalMessageIdentification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReqHdlg" type="RequestHandling" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>RequestHandling - second occurrance only in case of error detected by T2S (to provide also the T2S error code)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReceiptV03">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader2">
+				<xs:annotation>
+					<xs:documentation>MessageHeader</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RctDtls" type="Receipt1">
+				<xs:annotation>
+					<xs:documentation>ReceiptDetails</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RequestHandling">
+		<xs:sequence>
+			<xs:element name="StsCd" type="Max4AlphaNumericText">
+				<xs:annotation>
+					<xs:documentation>StatusCode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Desc" type="RestrictedFINXMax140Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="4"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:annotation>
+			<xs:documentation source="Name" xml:lang="EN">Max35Text</xs:documentation>
+			<xs:documentation source="Definition" xml:lang="EN">Specifies a character string with a maximum length of 35 characters.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINXMax140Text">
+		<xs:annotation>
+			<xs:documentation>RestrictedFINXMax140Text</xs:documentation>
+			<xs:documentation>Specifies a character string with a maximum length of 140 characters limited to character set X, that is, a-z A-Z / - ? : ( ) . , ‘ + .</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="140"/>
+			<xs:pattern value="[0-9a-zA-Z/\-\?:\(\)\.\n\r,&apos;\+ ]{1,140}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

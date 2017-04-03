@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.998.001.02" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.998.001.02" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="ASId">
+		<xs:sequence>
+			<xs:element name="ASSts" type="RecordStatus">
+				<xs:annotation>
+					<xs:documentation>ancillary system status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BICAS" type="BICIdentifier">
+				<xs:annotation>
+					<xs:documentation>BIC ancillary system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BusinessReport">
+		<xs:sequence>
+			<xs:element name="CtctItm" type="ContactItem" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>contact item</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CentralBankId">
+		<xs:sequence>
+			<xs:element name="CntrlBkSts" type="RecordStatus">
+				<xs:annotation>
+					<xs:documentation>central bank status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BICCntrlBk" type="BICIdentifier">
+				<xs:annotation>
+					<xs:documentation>BIC central bank</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactItem">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="LglNttyId" type="LegalEntityId">
+					<xs:annotation>
+						<xs:documentation>legal entity identification</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CntrlBkId" type="CentralBankId">
+					<xs:annotation>
+						<xs:documentation>central bank identification</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PtcptId" type="ParticipantId">
+					<xs:annotation>
+						<xs:documentation>participant identification</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ASId" type="ASId">
+					<xs:annotation>
+						<xs:documentation>ancillary system</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="CtctItmInf" type="ContactItemInfo" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>contact item information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactItemDetails">
+		<xs:sequence>
+			<xs:element name="Fctn" type="Function">
+				<xs:annotation>
+					<xs:documentation>function</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CtctItmId" type="ContactItemValue" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>contact item identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactItemInfo">
+		<xs:sequence>
+			<xs:element name="CtctItmDtls" type="ContactItemDetails">
+				<xs:annotation>
+					<xs:documentation>contact item details</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactItemValue">
+		<xs:sequence>
+			<xs:element name="CtctItmTp" type="CtImType">
+				<xs:annotation>
+					<xs:documentation>contact item type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CtctItmVal" type="Max70Text">
+				<xs:annotation>
+					<xs:documentation>contact item value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="PrtryMsg" type="ProprietaryMessage">
+				<xs:annotation>
+					<xs:documentation>free format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorCode">
+		<xs:sequence>
+			<xs:element name="Prtry" type="Max4AlphaNumericText">
+				<xs:annotation>
+					<xs:documentation>XML error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling">
+		<xs:sequence>
+			<xs:element name="Err" type="ErrorCode">
+				<xs:annotation>
+					<xs:documentation>error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Desc" type="Max140Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Function">
+		<xs:sequence>
+			<xs:element name="FctnTp" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>function type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FrstNm" type="Max35Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>first name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LastNm" type="Max35Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>last name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LegalEntityId">
+		<xs:sequence>
+			<xs:element name="LglNttySts" type="RecordStatus">
+				<xs:annotation>
+					<xs:documentation>legal entity status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BICLglNtty" type="BICIdentifier">
+				<xs:annotation>
+					<xs:documentation>BIC legal entity</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParticipantId">
+		<xs:sequence>
+			<xs:element name="PtcptSts" type="RecordStatus">
+				<xs:annotation>
+					<xs:documentation>participant status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ctry" type="CountryCode">
+				<xs:annotation>
+					<xs:documentation>country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BICPtcpt" type="BICIdentifier">
+				<xs:annotation>
+					<xs:documentation>BIC participant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReturnContactItem">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="BizRpt" type="BusinessReport">
+					<xs:annotation>
+						<xs:documentation>business report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OprlErr" type="ErrorHandling">
+					<xs:annotation>
+						<xs:documentation>technical error report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageReference">
+		<xs:sequence>
+			<xs:element name="Ref" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData">
+		<xs:sequence>
+			<xs:element name="Tp" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>always "ReturnContactItem"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SspPrtryDt" type="SspProprietaryData">
+				<xs:annotation>
+					<xs:documentation>SSP proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryMessage">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageReference">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Rltd" type="MessageReference">
+				<xs:annotation>
+					<xs:documentation>related reference - message identification of the related request</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrtryData" type="ProprietaryData">
+				<xs:annotation>
+					<xs:documentation>proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SspProprietaryData">
+		<xs:sequence>
+			<xs:element name="ReturnContactItem" type="ReturnContactItem">
+				<xs:annotation>
+					<xs:documentation>message type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Change">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>none</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D">
+				<xs:annotation>
+					<xs:documentation>deletion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M">
+				<xs:annotation>
+					<xs:documentation>modification</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{2,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CtImType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max140Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="140"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max70Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="70"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RecordStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AC">
+				<xs:annotation>
+					<xs:documentation>active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FU">
+				<xs:annotation>
+					<xs:documentation>future</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RE">
+				<xs:annotation>
+					<xs:documentation>rejected</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AR">
+				<xs:annotation>
+					<xs:documentation>archived</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AF">
+				<xs:annotation>
+					<xs:documentation>archived future</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DV">
+				<xs:annotation>
+					<xs:documentation>delivery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ID">
+				<xs:annotation>
+					<xs:documentation>in deletion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IC">
+				<xs:annotation>
+					<xs:documentation>in change</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

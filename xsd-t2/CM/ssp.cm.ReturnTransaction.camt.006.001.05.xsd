@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.006.001.05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.006.001.05" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="Amount3Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="AmtWthtCcy" type="ImpliedCurrencyAndAmount"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICFIIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="BranchAndFinancialInstitutionIdentification5">
+		<xs:sequence>
+			<xs:element name="FinInstnId" type="FinancialInstitutionIdentification8"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CreditDebitCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CRDT"/>
+			<xs:enumeration value="DBIT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DateAndDateTimeChoice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="DtTm" type="ISODateTime"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateTimePeriodChoice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="FrDtTm" type="ISODateTime"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="RtrTx" type="ReturnTransactionV05"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling1Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Prtry" type="Max4AlphaNumericText"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling3">
+		<xs:sequence>
+			<xs:element name="Err" type="ErrorHandling1Choice"/>
+			<xs:element name="Desc" type="Max140Text" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="FinalStatus1Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="STLD"/>
+			<xs:enumeration value="RJTD"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="FinancialInstitutionIdentification8">
+		<xs:sequence>
+			<xs:element name="BICFI" type="BICFIIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="2"/>
+			<xs:totalDigits value="18"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max140Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="140"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max256Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="4"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max43Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="43"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MessageHeader5">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text"/>
+			<xs:element name="OrgnlBizQry" type="OriginalBusinessQuery1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OriginalBusinessQuery1">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentIdentification4Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="PrtryId" type="Max43Text"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentInstruction1">
+		<xs:sequence>
+			<xs:element name="ReqdExctnDt" type="DateAndDateTimeChoice"/>
+			<xs:element name="Sts" type="PaymentStatus1"/>
+			<xs:element name="InstdAmt" type="Amount3Choice"/>
+			<xs:element name="PrcgVldtyTm" type="DateTimePeriodChoice" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="TxId" type="Max35Text" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentStatus1">
+		<xs:sequence>
+			<xs:element name="Cd" type="PaymentStatusCode5Choice"/>
+			<xs:element name="DtTm" type="DateAndDateTimeChoice"/>
+			<xs:element name="Rsn" type="PaymentStatusReasonCode5Choice" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentStatusCode5Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Pdg" type="PendingStatus4Code"/>
+				<xs:element name="Fnl" type="FinalStatus1Code"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentStatusReasonCode5Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="PrtryRjctn" type="ProprietaryStatusJustification"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PendingStatus4Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PSTL"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ProprietaryStatusJustification">
+		<xs:sequence>
+			<xs:element name="PrtryStsRsn" type="Max4AlphaNumericText"/>
+			<xs:element name="Rsn" type="Max256Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReturnTransactionV05">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader5"/>
+			<xs:element name="RptOrErr" type="TransactionReportOrError1Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="System1">
+		<xs:sequence>
+			<xs:element name="MmbId" type="BranchAndFinancialInstitutionIdentification5"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Transaction24">
+		<xs:sequence>
+			<xs:element name="PmtTo" type="System1" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="PmtFr" type="System1" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="CdtDbtInd" type="CreditDebitCode" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Pmt" type="PaymentInstruction1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionOrError1Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Tx" type="Transaction24"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionReport1">
+		<xs:sequence>
+			<xs:element name="PmtId" type="PaymentIdentification4Choice"/>
+			<xs:element name="TxOrErr" type="TransactionOrError1Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionReportOrError1Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="BizRpt" type="Transactions5"/>
+				<xs:element name="OprlErr" type="ErrorHandling3"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Transactions5">
+		<xs:sequence>
+			<xs:element name="TxRpt" type="TransactionReport1" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

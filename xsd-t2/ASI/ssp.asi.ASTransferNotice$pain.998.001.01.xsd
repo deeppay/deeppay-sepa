@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:$pain.998.001.01" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:$pain.998.001.01" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AccountIdentification">
+		<xs:sequence>
+			<xs:element name="DmstAcct" type="SimpleIdentificationInformation">
+				<xs:annotation>
+					<xs:documentation>account number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BalanceInformation">
+		<xs:sequence>
+			<xs:element name="Amt" type="ImpliedCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>new balance in EUR</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CdtDbtInd" type="CreditDebitCode">
+				<xs:annotation>
+					<xs:documentation>credit/debit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ValDt" type="DateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>value date/time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CreditTransferTypeIdentification">
+		<xs:sequence>
+			<xs:element name="SttlmPrty" type="Settlement">
+				<xs:annotation>
+					<xs:documentation>settlement priority</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateTime">
+		<xs:sequence>
+			<xs:element name="DtTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>business date + system time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="pain.998.001.01" type="pain.998.001.01">
+				<xs:annotation>
+					<xs:documentation>free format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FinancialInstitutionIdentifciaton">
+		<xs:sequence>
+			<xs:element name="BIC" type="BICIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GenericPaymentTransaction">
+		<xs:sequence>
+			<xs:element name="PmtId" type="PaymentIdentification">
+				<xs:annotation>
+					<xs:documentation>payment identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Amt" type="InstructedAmount">
+				<xs:annotation>
+					<xs:documentation>instructed amount</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Cdtr" type="PartyIdentification1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>creditor</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CdtrAcct" type="AccountIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>creditor account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FnlAgt" type="FinancialInstitutionIdentifciaton">
+				<xs:annotation>
+					<xs:documentation>final agent</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FnlAgtAcct" type="AccountIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>final agent account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RmtInf" type="RemittanceInformation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>remittance information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GroupInformation">
+		<xs:sequence>
+			<xs:element name="GrpId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>group identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CreDtTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>creation date/time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CtrlSum" type="DecimalNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>control sum</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NbOfTxs" type="Max15NumericText" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>number of transactions</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Prty" type="PriorityCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>priority</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SttlmMdlTp" type="SettlementModelType">
+				<xs:annotation>
+					<xs:documentation>settlement period type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CtpAS" type="PartyIdentification2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>counterpart AS</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InstructedAmount">
+		<xs:sequence>
+			<xs:element name="InstAmt" type="ImpliedCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>amount in Euro</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="pain.998.001.01">
+		<xs:sequence>
+			<xs:element name="PrtryDt" type="ProprietaryData">
+				<xs:annotation>
+					<xs:documentation>proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PartyIdentification1">
+		<xs:sequence>
+			<xs:element name="Nm" type="Max70Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FI" type="FinancialInstitutionIdentifciaton" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>financial institution</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PartyIdentification2">
+		<xs:sequence>
+			<xs:element name="FI" type="FinancialInstitutionIdentifciaton">
+				<xs:annotation>
+					<xs:documentation>financial institution</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentIdentification">
+		<xs:sequence>
+			<xs:element name="InstrId" type="Max16Text">
+				<xs:annotation>
+					<xs:documentation>instruction identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndToEndId" type="Max16Text">
+				<xs:annotation>
+					<xs:documentation>end-to-end identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentInformation">
+		<xs:sequence>
+			<xs:element name="ReqdExctnDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>requested execution date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CdtTrfTpId" type="CreditTransferTypeIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>credit transfer type identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Dbtr" type="PartyIdentification1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>debtor</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DbtrAcct" type="AccountIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>debtor account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FrstAgt" type="FinancialInstitutionIdentifciaton">
+				<xs:annotation>
+					<xs:documentation>first agent</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FrstAgtAcct" type="AccountIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>first agent account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PmtTx" type="GenericPaymentTransaction">
+				<xs:annotation>
+					<xs:documentation>payment transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentScheme">
+		<xs:sequence>
+			<xs:element name="Cd" type="CashClearingSystemCode">
+				<xs:annotation>
+					<xs:documentation>code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData">
+		<xs:sequence>
+			<xs:element name="Tp" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>always "ASTransferNotice"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SspPrtryDt" type="SspProprietaryData">
+				<xs:annotation>
+					<xs:documentation>SSP proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RemittanceInformation">
+		<xs:sequence>
+			<xs:element name="Ustrd" type="Max140Text">
+				<xs:annotation>
+					<xs:documentation>unstructured</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ScheduledTimeType">
+		<xs:sequence>
+			<xs:element name="InfPrdTp" type="InformationPeriodTypeCode">
+				<xs:annotation>
+					<xs:documentation>information period type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="FrTm" type="ISOTime">
+					<xs:annotation>
+						<xs:documentation>from time</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TmPrd" type="ISOTime">
+					<xs:annotation>
+						<xs:documentation>time period</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Settlement">
+		<xs:sequence>
+			<xs:element name="PmtSchme" type="PaymentScheme">
+				<xs:annotation>
+					<xs:documentation>payment scheme</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SettlementPeriodType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="ToTm" type="ISOTime">
+					<xs:annotation>
+						<xs:documentation>to time</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TmPrd" type="ISOTime">
+					<xs:annotation>
+						<xs:documentation>time period</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SimpleIdentificationInformation">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SspProprietaryData">
+		<xs:sequence>
+			<xs:element name="GrpHdr" type="GroupInformation">
+				<xs:annotation>
+					<xs:documentation>group header</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PmtInf" type="PaymentInformation" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>payment information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RsltgBal" type="BalanceInformation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>balance after Cross-DVP payment</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CashClearingSystemCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CUO">
+				<xs:annotation>
+					<xs:documentation>current order</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CSP">
+				<xs:annotation>
+					<xs:documentation>connected SSP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CHA">
+				<xs:annotation>
+					<xs:documentation>connected home account</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COL">
+				<xs:annotation>
+					<xs:documentation>auto-collateral</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CDS">
+				<xs:annotation>
+					<xs:documentation>cross-DVP-settlement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="STR">
+				<xs:annotation>
+					<xs:documentation>specific transactions</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SET">
+				<xs:annotation>
+					<xs:documentation>settlement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SOR">
+				<xs:annotation>
+					<xs:documentation>standing order</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="REP">
+				<xs:annotation>
+					<xs:documentation>REPO countries</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CreditDebitCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CRDT">
+				<xs:annotation>
+					<xs:documentation>credits</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DBIT">
+				<xs:annotation>
+					<xs:documentation>debits</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DecimalNumber">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="18"/>
+			<xs:fractionDigits value="17"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:totalDigits value="18"/>
+			<xs:fractionDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InformationPeriodTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="INFO"/>
+			<xs:enumeration value="AGRE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="ISOTime">
+		<xs:restriction base="xs:time"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max140Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="140"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max15NumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,15}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max16Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="16"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max70Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="70"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PriorityCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HIGH">
+				<xs:annotation>
+					<xs:documentation>SSP highly urgent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SettlementModelType">
+		<xs:restriction base="xs:decimal">
+			<xs:enumeration value="1000"/>
+			<xs:enumeration value="2000"/>
+			<xs:enumeration value="3000"/>
+			<xs:enumeration value="4000"/>
+			<xs:enumeration value="5000"/>
+			<xs:enumeration value="6000"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

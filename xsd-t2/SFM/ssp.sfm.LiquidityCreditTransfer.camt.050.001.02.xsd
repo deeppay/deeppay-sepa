@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.050.001.02" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.050.001.02" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AccountIdentification">
+		<xs:sequence>
+			<xs:element name="DmstAcct" type="SimpleIdentificationInformation">
+				<xs:annotation>
+					<xs:documentation>BIC</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccountIdentificationDetails">
+		<xs:sequence>
+			<xs:element name="Id" type="AccountIdentification">
+				<xs:annotation>
+					<xs:documentation>account identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Tp" type="CashAccountTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>account type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Amount">
+		<xs:sequence>
+			<xs:element name="AmtWthtCcy" type="ImpliedCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>amount in Euro</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="LqdtyCdtTfr" type="LiquidityCreditTransfer">
+				<xs:annotation>
+					<xs:documentation>liquidity credit transfer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LiquidityCreditTransfer">
+		<xs:sequence>
+			<xs:element name="MsgId" type="MessageIdentification">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CdtAcct" type="AccountIdentificationDetails" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>credited account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TrfdAmt" type="Amount">
+				<xs:annotation>
+					<xs:documentation>transfered amount</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DbtAcct" type="AccountIdentificationDetails" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>debited account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageIdentification">
+		<xs:sequence>
+			<xs:element name="Id" type="Max35ButFirst16CheckFIN20"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SimpleIdentificationInformation">
+		<xs:sequence>
+			<xs:element name="Id" type="BICIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CashAccountTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MGLD">
+				<xs:annotation>
+					<xs:documentation>marginal lending</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ONDP">
+				<xs:annotation>
+					<xs:documentation>overnight deposit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minExclusive value="0"/>
+			<xs:maxExclusive value="1000000000000"/>
+			<xs:fractionDigits value="2"/>
+			<xs:totalDigits value="18"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35tButFirst16XSwiftText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(([A-Z]|[a-z]|[0-9]|[/]|[\-]|[?]|[:]|[(]|[)]|[.]|[,]|[']|[+]|[ ]){1,16})|(([A-Z]|[a-z]|[0-9]|[/]|[\-]|[?]|[:]|[(]|[)]|[.]|[,]|[']|[+]|[ ]){16,16})(.{1,19})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NoStartSlash">
+		<xs:restriction base="Max35tButFirst16XSwiftText">
+			<xs:pattern value="[^/](.{0,15})(.{0,19})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35ButFirst16CheckFIN20">
+		<xs:restriction base="NoStartSlash">
+			<xs:pattern value="((.{0,15})[^/])|((.{15,15})[^/](.{1,19}))"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

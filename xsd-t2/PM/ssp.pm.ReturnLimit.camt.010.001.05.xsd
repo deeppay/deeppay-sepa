@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 rel. 2 (http://www.altova.com) by 15 concurrent users of Z4 (DEUTSCHE BUNDESBANK) -->
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.010.001.05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.010.001.05" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="Amount2Choice">
+		<xs:sequence>
+			<xs:element name="AmtWthtCcy" type="ImpliedCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>amount in Euro</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BranchAndFinancialInstitutionIdentification5">
+		<xs:sequence>
+			<xs:element name="FinInstnId" type="FinancialInstitutionIdentification8"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="RtrLmt" type="ReturnLimit">
+				<xs:annotation>
+					<xs:documentation>return limit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling1Choice">
+		<xs:sequence>
+			<xs:element name="Prtry" type="Max4AlphaNumericText">
+				<xs:annotation>
+					<xs:documentation>XML error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling3">
+		<xs:sequence>
+			<xs:element name="Err" type="ErrorHandling1Choice">
+				<xs:annotation>
+					<xs:documentation>error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Desc" type="Max140Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FinancialInstitutionIdentification8">
+		<xs:sequence>
+			<xs:element name="BICFI" type="BICFIIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Limit4">
+		<xs:sequence>
+			<xs:element name="Amt" type="Amount2Choice">
+				<xs:annotation>
+					<xs:documentation>amount</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CdtDbtInd" type="CreditDebitCode">
+				<xs:annotation>
+					<xs:documentation>debit indicator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LimitIdentification1">
+		<xs:sequence>
+			<xs:element name="BilLmtCtrPtyId" type="BranchAndFinancialInstitutionIdentification5" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>counterparty</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Tp" type="LimitType1Choice">
+				<xs:annotation>
+					<xs:documentation>limit type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AcctOwnr" type="BranchAndFinancialInstitutionIdentification5">
+				<xs:annotation>
+					<xs:documentation>participant BIC</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LimitOrError1Choice">
+		<xs:sequence>
+			<xs:element name="Lmt" type="Limit4">
+				<xs:annotation>
+					<xs:documentation>limit details</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LimitReport4">
+		<xs:sequence>
+			<xs:element name="LmtId" type="LimitIdentification1">
+				<xs:annotation>
+					<xs:documentation>limit identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LmtOrErr" type="LimitOrError1Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LimitReportOrError1Choice">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="BizRpt" type="Limits4">
+					<xs:annotation>
+						<xs:documentation>business report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OprlErr" type="ErrorHandling3">
+					<xs:annotation>
+						<xs:documentation>technical error report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Limits4">
+		<xs:sequence>
+			<xs:element name="CurLmt" type="LimitReport4" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>current limits</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DfltLmt" type="LimitReport4" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>standing order limits</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LimitType1Choice">
+		<xs:sequence>
+			<xs:element name="Cd" type="LimitType3Code"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageHeader3">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrgnlBizQry" type="OriginalBusinessQuery1">
+				<xs:annotation>
+					<xs:documentation>reference to the query</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OriginalBusinessQuery1">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>query reference - message identification of the related request</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReturnLimit">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader3"/>
+			<xs:element name="RptOrErr" type="LimitReportOrError1Choice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICFIIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CreditDebitCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DBIT">
+				<xs:annotation>
+					<xs:documentation>debits</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:totalDigits value="18"/>
+			<xs:fractionDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LimitType3Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BILI">
+				<xs:annotation>
+					<xs:documentation>bilateral limit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MULT">
+				<xs:annotation>
+					<xs:documentation>multilateral limit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max140Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="140"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

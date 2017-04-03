@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:camt.998.001.03" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:camt.998.001.03" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="BusinessReport">
+		<xs:sequence>
+			<xs:element name="CntrlBk" type="CB" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>central bank</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CB">
+		<xs:sequence>
+			<xs:element name="RecStsInf" type="RecordStatusInfo">
+				<xs:annotation>
+					<xs:documentation>record status information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CntrlBkInf" type="CBInfo" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>central bank information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CBInfo">
+		<xs:sequence>
+			<xs:element name="CntrlBkNm" type="Name">
+				<xs:annotation>
+					<xs:documentation>central bank name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BICCntrlBk" type="BICIdentifier">
+				<xs:annotation>
+					<xs:documentation>BIC central bank</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ctry" type="CountryCode">
+				<xs:annotation>
+					<xs:documentation>country</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CntrlBkCty" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>central bank city</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EurSysFlag" type="Flag">
+				<xs:annotation>
+					<xs:documentation>eurosystem flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ClctnPrdctyHam" type="Max2Number">
+				<xs:annotation>
+					<xs:documentation>calculation periodicity for HAM</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ClltrlBIC" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>collateral manager BIC</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ClltrlDesc" type="Max50Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>collateral manager description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ClltrlSvc" type="Max30Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>collateral manager service</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ClltrlDN" type="Max100Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>collateral manager DN</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PckdFileClltrl" type="Flag" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>packed file delivery (collateral manager)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PHADN" type="Max100Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>proprietary home account distinguished name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PHASvc" type="Max30Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>proprietary home account SWIFTNet service</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Svc" type="Max30Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>service</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DN" type="Max100Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>distinguished name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PckdFile" type="Flag" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>packed file delivery for push mode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ECBAcctBIC" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ECB account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ECBMrAcctBIC" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ECB mirror account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CBBldT2SInv" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>CB BIC to be billed for T2S invoices</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MigtnFlag" type="Flag" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>migration flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HamFlag" type="Flag">
+				<xs:annotation>
+					<xs:documentation>HAM flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RMFlag" type="Flag">
+				<xs:annotation>
+					<xs:documentation>FM flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SFMFlag" type="Flag">
+				<xs:annotation>
+					<xs:documentation>SFM flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CRAKS1Flag" type="Flag">
+				<xs:annotation>
+					<xs:documentation>CRAKS 1 flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CRAKS3Flag" type="Flag">
+				<xs:annotation>
+					<xs:documentation>CRAKS 3 flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CRISPFlag" type="Flag">
+				<xs:annotation>
+					<xs:documentation>CRISP flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CRISPInvceFlag" type="Flag" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>CRISP - invoice flag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CCSP1" type="CountryCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>country code service provider 1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CCSP2" type="CountryCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>country code service provider 2</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CCSP3" type="CountryCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>country code service provider 3</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CtgncyBIC" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>contingency BIC</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IntrlkngBIC" type="BICIdentifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>interlinking BIC</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="T1SvcCd" type="ServiceCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TARGET 1 service code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaxForStgFclts" type="ImpliedCurrencyAndAmount" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>maximum amount allowed for standing facilities</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="PrtryMsg" type="ProprietaryMessage">
+				<xs:annotation>
+					<xs:documentation>free format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorCode">
+		<xs:sequence>
+			<xs:element name="Prtry" type="Max4AlphaNumericText">
+				<xs:annotation>
+					<xs:documentation>XML error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorHandling">
+		<xs:sequence>
+			<xs:element name="Err" type="ErrorCode">
+				<xs:annotation>
+					<xs:documentation>error code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Desc" type="Max140Text" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageHeader1">
+		<xs:sequence>
+			<xs:element name="MsgId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>unique and unambiguous identification of the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageReference">
+		<xs:sequence>
+			<xs:element name="Ref" type="Max35Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData">
+		<xs:sequence>
+			<xs:element name="Tp" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>always "ReturnCB"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Data" type="ProprietaryData3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData3">
+		<xs:sequence>
+			<xs:element name="SspPrtryDt" type="SspProprietaryData">
+				<xs:annotation>
+					<xs:documentation>SSP proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryMessage">
+		<xs:sequence>
+			<xs:element name="MsgHdr" type="MessageHeader1"/>
+			<xs:element name="Rltd" type="MessageReference">
+				<xs:annotation>
+					<xs:documentation>related reference - message identification of the related request</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrtryData" type="ProprietaryData">
+				<xs:annotation>
+					<xs:documentation>proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RecordStatusInfo">
+		<xs:sequence>
+			<xs:element name="PlnndChng" type="Change">
+				<xs:annotation>
+					<xs:documentation>planned change</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecSts" type="RecordStatus">
+				<xs:annotation>
+					<xs:documentation>record status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FrstDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>first activation date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ModDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>modification date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndDt" type="ISODate">
+				<xs:annotation>
+					<xs:documentation>end date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReturnCB">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="BizRpt" type="BusinessReport">
+					<xs:annotation>
+						<xs:documentation>business report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OprlErr" type="ErrorHandling">
+					<xs:annotation>
+						<xs:documentation>technical error report</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SspProprietaryData">
+		<xs:sequence>
+			<xs:element name="ReturnCB" type="ReturnCB">
+				<xs:annotation>
+					<xs:documentation>message type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Change">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>none</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D">
+				<xs:annotation>
+					<xs:documentation>deletion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M">
+				<xs:annotation>
+					<xs:documentation>modification</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{2,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Flag">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Y"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:totalDigits value="18"/>
+			<xs:fractionDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date">
+			<xs:pattern value="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max100Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="100"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max140Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="140"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max2Number">
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="0"/>
+			<xs:totalDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max30Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="30"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max50Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Name">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RecordStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AC">
+				<xs:annotation>
+					<xs:documentation>active</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FU">
+				<xs:annotation>
+					<xs:documentation>future</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RE">
+				<xs:annotation>
+					<xs:documentation>rejected</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AR">
+				<xs:annotation>
+					<xs:documentation>archived</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AF">
+				<xs:annotation>
+					<xs:documentation>archived future</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DV">
+				<xs:annotation>
+					<xs:documentation>delivery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ID">
+				<xs:annotation>
+					<xs:documentation>in deletion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IC">
+				<xs:annotation>
+					<xs:documentation>in change</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ServiceCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{3,3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

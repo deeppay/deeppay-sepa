@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<!-- SWIFT standard application header -->
+<xs:schema xmlns="urn:swift:xsd:$ahV10" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:$ahV10" elementFormDefault="qualified">
+	<xs:element name="AppHdr" type="AppHdr">
+		<xs:annotation>
+			<xs:documentation>application header for internal usage - mandatory for message exchange between SSP and PHA</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AppHdr">
+		<xs:sequence>
+			<xs:element name="From" type="EntityIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>source - requests: not used - responses: indicates "PHA"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="To" type="EntityIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>destination - requests: indicates "PHA" - responses: not used</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MsgName" type="TwoOrFourEyesIndicator" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>requests: indication of 2-eyes- or 4-eyes-principle - responses: not used</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MsgRef" type="Void">
+				<xs:annotation>
+					<xs:documentation>message reference - not used</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CrDate" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>creation date - time when the message was created.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Dup" type="InitiatorIndication">
+				<xs:annotation>
+					<xs:documentation>sender of the initial request</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InitiatorIndication">
+		<xs:sequence>
+			<xs:element name="Ref" type="Reference">
+				<xs:annotation>
+					<xs:documentation>always "DN"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Info" type="Max100Text">
+				<xs:annotation>
+					<xs:documentation>DN of the initiator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntityIdentification">
+		<xs:sequence>
+			<xs:element name="Type" type="Type">
+				<xs:annotation>
+					<xs:documentation>always "NAME"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Id" type="EntityIdentifier">
+				<xs:annotation>
+					<xs:documentation>always "PHA"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="EntityIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PHA"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max100Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Reference">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DN"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TwoOrFourEyesIndicator">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="twoEyesPrinciple"/>
+			<xs:enumeration value="fourEyesPrinciple"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NAME"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Void">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="void"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

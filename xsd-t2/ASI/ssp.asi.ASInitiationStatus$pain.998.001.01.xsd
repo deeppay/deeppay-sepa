@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official SWIFT schema. The full SWIFT schema may be found on www.swift.com -->
+<xs:schema xmlns="urn:swift:xsd:$pain.998.001.01" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:swift:xsd:$pain.998.001.01" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="pain.998.001.01" type="pain.998.001.01">
+				<xs:annotation>
+					<xs:documentation>free format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeneralInformation">
+		<xs:sequence>
+			<xs:element name="PmtInitnStsId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>payment initiation status identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CreDtTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>creation date/time</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="pain.998.001.01">
+		<xs:sequence>
+			<xs:element name="PrtryDt" type="ProprietaryData">
+				<xs:annotation>
+					<xs:documentation>proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProprietaryData">
+		<xs:sequence>
+			<xs:element name="Tp" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>always "ASInitiationStatus"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SspPrtryDt" type="SspProprietaryData">
+				<xs:annotation>
+					<xs:documentation>SSP proprietary data</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OriginalGroupReferenceInformation">
+		<xs:sequence>
+			<xs:element name="GrpId" type="Max35Text">
+				<xs:annotation>
+					<xs:documentation>group identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrgnlMsgTp" type="OriginalMessageType">
+				<xs:annotation>
+					<xs:documentation>original message type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SttlmMdlTp" type="SettlementModelType">
+				<xs:annotation>
+					<xs:documentation>settlement model type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DecInd" type="YesNoIndicator" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>decision indicator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GrpSts" type="PaymentGroupStatusCodeT" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>group status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StsRsn" type="PaymentRejectReason" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>status reason</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentIdentification">
+		<xs:sequence>
+			<xs:element name="InstrId" type="Max16Text">
+				<xs:annotation>
+					<xs:documentation>instruction identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndToEndId" type="Max16Text">
+				<xs:annotation>
+					<xs:documentation>end-to-end identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentInformation">
+		<xs:sequence>
+			<xs:element name="ReqdExctnDt" type="ISODate" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>requested execution date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrgnlTxRefInfAndSts" type="PaymentReference">
+				<xs:annotation>
+					<xs:documentation>original transaction reference information and status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentReference">
+		<xs:sequence>
+			<xs:element name="PmtId" type="PaymentIdentification">
+				<xs:annotation>
+					<xs:documentation>payment identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TxSts" type="PaymentTransactionStatusCodeT" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>transaction status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StsRsn" type="PaymentRejectReason" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>status reason</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddtlInf" type="ImpliedCurrencyAndAmount" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>settled amount of a current order which is partially settled</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentRejectReason">
+		<xs:sequence>
+			<xs:element name="BilyAgrd" type="Max4AlphaNumericText">
+				<xs:annotation>
+					<xs:documentation>bilaterally agreed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SspProprietaryData">
+		<xs:sequence>
+			<xs:element name="GnlInf" type="GeneralInformation">
+				<xs:annotation>
+					<xs:documentation>general information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrgnlGrpRefInfAndSts" type="OriginalGroupReferenceInformation">
+				<xs:annotation>
+					<xs:documentation>original group reference information and status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrgnlPmtInf" type="PaymentInformation" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>original payment information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BICIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpliedCurrencyAndAmount">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:totalDigits value="18"/>
+			<xs:fractionDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max16Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="16"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max105Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="105"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max35Text">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max4AlphaNumericText">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="OriginalMessageType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ASTransferInitiation"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PaymentGroupStatusCodeT">
+		<xs:restriction base="PaymentStatusCode">
+			<xs:enumeration value="ACSC">
+				<xs:annotation>
+					<xs:documentation>accepted settlement completed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INVL">
+				<xs:annotation>
+					<xs:documentation>invalid</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PART">
+				<xs:annotation>
+					<xs:documentation>partially accepted</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RJCT">
+				<xs:annotation>
+					<xs:documentation>rejected</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="REVR">
+				<xs:annotation>
+					<xs:documentation>reversed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RJDA">
+				<xs:annotation>
+					<xs:documentation>rejected disagreement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PaymentStatusCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ACSC">
+				<xs:annotation>
+					<xs:documentation>accepted settlement completed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COPS">
+				<xs:annotation>
+					<xs:documentation>current order partially settled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INVL">
+				<xs:annotation>
+					<xs:documentation>invalid</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PART">
+				<xs:annotation>
+					<xs:documentation>partially accepted</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RJCT">
+				<xs:annotation>
+					<xs:documentation>rejected</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="REVR">
+				<xs:annotation>
+					<xs:documentation>reversed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RJDA">
+				<xs:annotation>
+					<xs:documentation>rejected disagreement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PaymentTransactionStatusCodeT">
+		<xs:restriction base="PaymentStatusCode">
+			<xs:enumeration value="ACSC">
+				<xs:annotation>
+					<xs:documentation>accepted settlement completed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="COPS">
+				<xs:annotation>
+					<xs:documentation>current order partially settled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INVL">
+				<xs:annotation>
+					<xs:documentation>invalid</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RJCT">
+				<xs:annotation>
+					<xs:documentation>rejected</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="REVR">
+				<xs:annotation>
+					<xs:documentation>reversed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RJDA">
+				<xs:annotation>
+					<xs:documentation>rejected disagreement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SettlementModelType">
+		<xs:restriction base="xs:decimal">
+			<xs:enumeration value="1000"/>
+			<xs:enumeration value="2000"/>
+			<xs:enumeration value="3000"/>
+			<xs:enumeration value="4000"/>
+			<xs:enumeration value="5000"/>
+			<xs:enumeration value="6000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="YesNoIndicator">
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This schema is a customised schema that covers the TARGET2 system requirements, and is not the official ISO schema. The full SWIFT schema may be found on www.iso20022.org -->
+<xs:schema xmlns="urn:iso:std:iso:20022:tech:xsd:camt.054.001.03" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:iso:std:iso:20022:tech:xsd:camt.054.001.03" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="AccountIdentification4Choice">
+		<xs:sequence>
+			<xs:element name="Othr" type="GenericAccountIdentification1">
+				<xs:annotation>
+					<xs:documentation>Other - Unique identification of an account, as assigned by the account servicer, using an identification scheme.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccountNotification5">
+		<xs:sequence>
+			<xs:element name="Id" type="RestrictedFINXMax16Text">
+				<xs:annotation>
+					<xs:documentation>Identification - Unique identification, as assigned by the account servicer, to unambiguously identify the account notification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CreDtTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>CreationDateTime</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Acct" type="CashAccount25">
+				<xs:annotation>
+					<xs:documentation>RTGS Account</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ntry" type="ReportEntry3">
+				<xs:annotation>
+					<xs:documentation>Entry</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AmountAndCurrencyExchange3">
+		<xs:sequence>
+			<xs:element name="InstdAmt" type="AmountAndCurrencyExchangeDetails3" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AmountAndCurrencyExchangeDetails3">
+		<xs:sequence>
+			<xs:element name="Amt" type="RestrictedFINActiveOrHistoricCurrencyAndAmount"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BankToCustomerDebitCreditNotificationV03">
+		<xs:sequence>
+			<xs:element name="GrpHdr" type="GroupHeader58">
+				<xs:annotation>
+					<xs:documentation>GroupHeader</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ntfctn" type="AccountNotification5">
+				<xs:annotation>
+					<xs:documentation>Notification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BankTransactionCodeStructure4">
+		<xs:sequence>
+			<xs:element name="Domn" type="BankTransactionCodeStructure5">
+				<xs:annotation>
+					<xs:documentation>Domain</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BankTransactionCodeStructure5">
+		<xs:sequence>
+			<xs:element name="Cd" type="BankTransactionDomain1Code">
+				<xs:annotation>
+					<xs:documentation>Code - Specifies the business area of the underlying transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Fmly" type="BankTransactionCodeStructure6">
+				<xs:annotation>
+					<xs:documentation>Family - Specifies the family and the sub-family of the bank transaction code, within a specific domain, in a structured and hierarchical format.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BankTransactionCodeStructure6">
+		<xs:sequence>
+			<xs:element name="Cd" type="BankTransactionFamily1Code">
+				<xs:annotation>
+					<xs:documentation>Code - Specifies the family within a domain.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SubFmlyCd" type="BankTransactionSubFamily1Code">
+				<xs:annotation>
+					<xs:documentation>SubFamilyCode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashAccount24">
+		<xs:sequence>
+			<xs:element name="Id" type="AccountIdentification4Choice">
+				<xs:annotation>
+					<xs:documentation>Identification Unique and unambiguous identification for the account between the account owner and the account servicer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CashAccount25">
+		<xs:sequence>
+			<xs:element name="Id" type="AccountIdentification4Choice">
+				<xs:annotation>
+					<xs:documentation>Identification - Unique and unambiguous identification for the account between the account owner and the account servicer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateAndDateTime">
+		<xs:annotation>
+			<xs:documentation>DateTime</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DtTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>SSPBusinessDate+SettlementTime</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="BkToCstmrDbtCdtNtfctn" type="BankToCustomerDebitCreditNotificationV03">
+				<xs:annotation>
+					<xs:documentation>BankToCustomerDebitCreditNotification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntryDetails2">
+		<xs:sequence>
+			<xs:element name="TxDtls" type="EntryTransaction3">
+				<xs:annotation>
+					<xs:documentation>TransactionDetails</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntryTransaction3">
+		<xs:sequence>
+			<xs:element name="Refs" type="TransactionReferences3">
+				<xs:annotation>
+					<xs:documentation>References</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Amt" type="RestrictedFINActiveOrHistoricCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>Amount</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CdtDbtInd" type="CreditDebitCode">
+				<xs:annotation>
+					<xs:documentation>CreditDebitIndicator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AmtDtls" type="AmountAndCurrencyExchange3" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Amount details</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RltdPties" type="TransactionParties3">
+				<xs:annotation>
+					<xs:documentation>RelatedParties = counterpart DCA</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GenericAccountIdentification1">
+		<xs:sequence>
+			<xs:element name="Id" type="RestrictedFINX2Max34Text">
+				<xs:annotation>
+					<xs:documentation>Identification</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN">Identification assigned by an institution.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GroupHeader58">
+		<xs:sequence>
+			<xs:element name="MsgId" type="RestrictedFINXMax16Text">
+				<xs:annotation>
+					<xs:documentation>MessageIdentification - Point to point reference, as assigned by the account servicing institution, and sent to the account owner or the party authorised to receive the message, to unambiguously identify the message.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CreDtTm" type="ISODateTime">
+				<xs:annotation>
+					<xs:documentation>CreationDateTime</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReportEntry3">
+		<xs:sequence>
+			<xs:element name="Amt" type="RestrictedFINActiveOrHistoricCurrencyAndAmount">
+				<xs:annotation>
+					<xs:documentation>Amount</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CdtDbtInd" type="CreditDebitCode">
+				<xs:annotation>
+					<xs:documentation>CreditDebitIndicator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sts" type="EntryStatus2Code">
+				<xs:annotation>
+					<xs:documentation>Status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BookgDt" type="DateAndDateTime">
+				<xs:annotation>
+					<xs:documentation>BookingDate</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BkTxCd" type="BankTransactionCodeStructure4">
+				<xs:annotation>
+					<xs:documentation>BankTransactionCode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NtryDtls" type="EntryDetails2">
+				<xs:annotation>
+					<xs:documentation>EntryDetails</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RestrictedFINActiveOrHistoricCurrencyAndAmount">
+		<xs:simpleContent>
+			<xs:extension base="RestrictedFINActiveOrHistoricCurrencyAndAmount_SimpleType">
+				<xs:attribute name="Ccy" type="ActiveOrHistoricCurrencyCode" use="required" fixed="EUR"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="TransactionParties3">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="DbtrAcct" type="CashAccount24">
+					<xs:annotation>
+						<xs:documentation>DebtorAccount</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CdtrAcct" type="CashAccount24">
+					<xs:annotation>
+						<xs:documentation>CreditorAccount</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionReferences3">
+		<xs:sequence>
+			<xs:element name="AcctSvcrRef" type="RestrictedFINXMax16Text">
+				<xs:annotation>
+					<xs:documentation>AccountServicerReference = SSP BusinessCaseID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InstrId" type="RestrictedFINXMax16Text">
+				<xs:annotation>
+					<xs:documentation>InstructionIdentification = TRN; SSP Booking ID in case of SO</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndToEndId" type="RestrictedFINXMax16Text">
+				<xs:annotation>
+					<xs:documentation>End-to-End Identification</xs:documentation>
+					<xs:documentation source="Definition" xml:lang="EN"/>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AcctSvcrTxId" type="RestrictedFINXMax16Text">
+				<xs:annotation>
+					<xs:documentation>AccountServicerTransactionIdentification = SSP Booking ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ActiveOrHistoricCurrencyCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{3,3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CreditDebitCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CRDT">
+				<xs:annotation>
+					<xs:documentation>Credit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DBIT">
+				<xs:annotation>
+					<xs:documentation>Debit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EntryStatus2Code">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BOOK">
+				<xs:annotation>
+					<xs:documentation>Booked</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BankTransactionDomain1Code">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="4"/>
+			<xs:enumeration value="PMNT">
+				<xs:annotation>
+					<xs:documentation>Payments area</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BankTransactionFamily1Code">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="4"/>
+			<xs:enumeration value="ICDT">
+				<xs:annotation>
+					<xs:documentation>Issued credit transfer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RCDT">
+				<xs:annotation>
+					<xs:documentation>Received credit transfer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RDDT">
+				<xs:annotation>
+					<xs:documentation>Received direct debit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BankTransactionSubFamily1Code">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="4"/>
+			<xs:enumeration value="FICT">
+				<xs:annotation>
+					<xs:documentation>Financial institution credit transfer (current order)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FIDD">
+				<xs:annotation>
+					<xs:documentation>Financial institution direct debit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RRTN">
+				<xs:annotation>
+					<xs:documentation>Reversal due to payment return</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="STDO">
+				<xs:annotation>
+					<xs:documentation>Standing order liquidity transfer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISODateTime">
+		<xs:restriction base="xs:dateTime">
+			<xs:pattern value="[0-9]{4,4}\-[0-9]{2,2}\-[0-9]{2,2}[T][0-9]{2,2}:[0-9]{2,2}:[0-9]{2,2}[\S]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINActiveOrHistoricCurrencyAndAmount_SimpleType">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:totalDigits value="14"/>
+			<xs:fractionDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINX2Max34Text">
+		<xs:annotation>
+			<xs:documentation>RestrictedFINX2Max34Text</xs:documentation>
+			<xs:documentation>Specifies a character string with a maximum length of 34 characters limited to character set X, that is, a-z A-Z / - ? : ( ) . , ‘ + .</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="34"/>
+			<xs:pattern value="[0-9a-zA-Z/\-\?:\(\)\.,&apos;\+ ]{1,34}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedFINXMax16Text">
+		<xs:annotation>
+			<xs:documentation>RestrictedFINXMax16Text</xs:documentation>
+			<xs:documentation>Specifies a character string with a maximum length of 16 characters. It has a pattern that disables the use of characters that is not part of the character set X, that is, that is not a-z A-Z / - ? : ( ) . , ‘ + , and disable the use of slash "/" at the beginning and end of line and double slash "//" within the line.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="16"/>
+			<xs:pattern value="([0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ]([0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ]*(/[0-9a-zA-Z\-\?:\(\)\.,&apos;\+ ])?)*)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max16NumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,16}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
