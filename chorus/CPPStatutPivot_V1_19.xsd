@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 2 (http://www.altova.com) by AIFE (BULL) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:element name="CPPStatut">
+		<xs:annotation>
+			<xs:documentation>Le CPP Facture Statut est le schéma de transport des statut et évènements relatifs aux factures des fournisseurs de la sphère publique.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Enveloppe"/>
+				<xs:choice>
+					<xs:element ref="CPPFluxStatuts"/>
+					<xs:element ref="CPPFactureStatuts"/>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="Version" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Identifiant de la version du format actuellement V1_18</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Enveloppe">
+		<xs:annotation>
+			<xs:documentation>contient les informations techniques relative au flux concerné</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="EnveloppeUnitaire" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="EnveloppeUnitaire">
+		<xs:annotation>
+			<xs:documentation>Chaque enveloppe unitaire contient les informations échangées entre deux partenaires</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Parametres"/>
+				<xs:element ref="Partenaires"/>
+			</xs:sequence>
+			<xs:attribute name="NumOrdre" type="xs:nonNegativeInteger"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Parametres">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ParametreIndiv" minOccurs="2" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ParametreIndiv" >
+		<xs:annotation>
+			<xs:documentation>A minima la liste des paramètre contient le paramètre contenant la date de production du flux (code paramètre DtPrd) et un identifiant de flux (code paramètre IdFlx)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Code">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:length value="5"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Valeurparametre" type="xs:string"/>
+				<xs:element name="Note" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="NumOrdre">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[0-9][0-9][0-9][0-9]"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Partenaires">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Recepteur"/>
+				<xs:element ref="Emetteur"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>		
+
+	<xs:element name="Recepteur">
+		<xs:annotation>
+			<xs:documentation>Réceteur du flux</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="3"/>
+							<xs:maxLength value="8"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Libelle" type="xs:string" minOccurs="0"/>
+				<!--Libelle : Longueur à limiter en fonction des retours SE2016 sur les paramétrages acceptables -->
+				<xs:element name="Note" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Emetteur">
+		<xs:annotation>
+			<xs:documentation>Emetteur du flux</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Id">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="3"/>
+							<xs:maxLength value="8"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Libelle" type="xs:string" minOccurs="0"/>
+				<!--Libelle : Longueur à limiter en fonction des retours SE2016 sur les paramétrages acceptables -->
+				<xs:element name="Note" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CPPFluxStatuts">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CPPFluxStatutUnitaire" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="compteur" type="xs:nonNegativeInteger"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CPPFluxStatutUnitaire">
+		<xs:annotation>
+			<xs:documentation>Contient les éléments relatifs à un statut concernant une facture</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DonneesStatut">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="IdStatut">
+								<xs:annotation>
+									<xs:documentation>Code statut 90 : Reçu, 91 : En cours de transmission, 92 :  Reçu Destinataire final, 93 : Erreur reception, 94 : Erreur reception destinataire final, 95 : Erreur de transmission au destinaitaire final, 96: Reçu - intégration partielle</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:nonNegativeInteger">
+										<xs:enumeration value="90"/>
+										<xs:enumeration value="91"/>
+										<xs:enumeration value="92"/>
+										<xs:enumeration value="93"/>
+										<xs:enumeration value="94"/>
+										<xs:enumeration value="95"/>
+										<xs:enumeration value="96"/>	
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ComplementStatut" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="40"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Commentaire" type="xs:string" minOccurs="0"/>
+							<xs:element name="Note" type="xs:string" minOccurs="0"/>
+							<xs:element name="Horodatage" type="xs:dateTime">
+								<xs:annotation>
+									<xs:documentation>indique la date de production du statut</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="IdProducteur" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:length value="8"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Producteur" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Identifie le producteur du statut</xs:documentation>
+								</xs:annotation>
+								<xs:complexType/>
+							</xs:element>
+							<xs:element name="IdFlux" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Identifiant chez le producteur du flux</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="Details" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="NumOrdre" type="xs:nonNegativeInteger"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Details">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="LigneErreurDetail" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="NbLignesErreur" type="xs:nonNegativeInteger" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="LigneErreurDetail">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NatureErreur" type="xs:string"/>
+				<xs:element name="CodeErreur" type="xs:string"/>
+				<xs:element name="LibelleErreur" type="xs:string"/>
+				<xs:element name="DescriptionErreur" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="IdLigne"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CPPFactureStatuts">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CPPFactureStatutUnitaire" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="compteur" type="xs:nonNegativeInteger"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CPPFactureStatutUnitaire">
+		<xs:annotation>
+			<xs:documentation>L'élément CPP facture Statut unitaire contient l'ensemble des éléments relatifs à un statut concernant une facture</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Fournisseur"/>
+				<xs:element ref="Debiteur"/>
+				<xs:element name="DonneesStatut">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="IdStatut">
+								<xs:simpleType>
+									<xs:annotation>
+										<xs:documentation>Les valeurs possibles sont : - 01 : Déposée - 02 : cours d’acheminement vers le destinataire - 03 : Mise à disposition du destinataire - 04 : Rejetée par l’ordonnateur pour erreur dans les données d’acheminement - 05 : Rejetée par l’ordonnateur pour autre motif - 06 : Suspendue - 07 : Service fait - 08 : Mandatée /DP validée - 09 : Mise à disposition du comptable - 10 : Comptabilisée - 11 : Mise en paiement - 12 : Complétée – mise à disposition - 13 : Validée par le premier valideur - 14 : Refusée par le premier valideur pour autre motif - 15 : Validation 1 hors délai - 16 : Validation 2 hors délai - 17 : Refusée par le second valideur pour autre motif - 18 : Validée par le second valideur - 19 : Refusée par la MOE pour autre motif - 20 : Refusée par le fournisseur pour autre motif - 21 : Associée - 22 : Conforme – non intégrée - 23 : Mise à disposition du premier valideur - 24 : Refusée par le premier valideur pour erreur dans les données d’acheminement - 25 : Mise à disposition du second valideur - 26 : Refusée par le second valideur pour erreur des données d’acheminement - 27 : Mise à disposition MOE - 28 : Refusée par la MOE pour erreur dans les données d’acheminement - 29 : Prise en compte MOE - 30 : Mise à disposition MOA - 31 : Refusée par la MOA pour erreur dans les données d’acheminement - 32 : Refusée par la MOA pour autre motif - 33 : Mise à disposition fournisseur - 34 : Demande de complément - 35 : Transmise à la MOA - 36 : Prise en compte par le destinataire - 37 : Non conforme - non intégrée - 38 : Prise en compte par la MOA - 39 : Acheminée MOA - 40 : Acheminée MOE - 41 : Remplacée par A22</xs:documentation>
+									</xs:annotation>
+									<xs:restriction base="xs:nonNegativeInteger">
+										<xs:enumeration value="01"/>
+										<xs:enumeration value="02"/>
+										<xs:enumeration value="03"/>
+										<xs:enumeration value="04"/>
+										<xs:enumeration value="05"/>
+										<xs:enumeration value="06"/>
+										<xs:enumeration value="07"/>
+										<xs:enumeration value="08"/>
+										<xs:enumeration value="09"/>
+										<xs:enumeration value="10"/>
+										<xs:enumeration value="11"/>
+										<xs:enumeration value="12"/>
+										<xs:enumeration value="13"/>
+										<xs:enumeration value="14"/>
+										<xs:enumeration value="15"/>
+										<xs:enumeration value="16"/>
+										<xs:enumeration value="17"/>
+										<xs:enumeration value="18"/>
+										<xs:enumeration value="19"/>
+										<xs:enumeration value="20"/>
+										<xs:enumeration value="21"/>
+										<xs:enumeration value="22"/>
+										<xs:enumeration value="23"/>
+										<xs:enumeration value="24"/>
+										<xs:enumeration value="25"/>
+										<xs:enumeration value="26"/>
+										<xs:enumeration value="27"/>
+										<xs:enumeration value="28"/>
+										<xs:enumeration value="29"/>
+										<xs:enumeration value="30"/>
+										<xs:enumeration value="31"/>
+										<xs:enumeration value="32"/>
+										<xs:enumeration value="33"/>
+										<xs:enumeration value="34"/>
+										<xs:enumeration value="35"/>
+										<xs:enumeration value="36"/>
+										<xs:enumeration value="37"/>
+										<xs:enumeration value="38"/>
+										<xs:enumeration value="39"/>
+										<xs:enumeration value="40"/>
+										<xs:enumeration value="41"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ComplementStatut" type="xs:string" minOccurs="0"/>
+							<xs:element name="Commentaire" type="xs:string"	minOccurs="0"/>
+							<xs:element name="Horodatage" type="xs:dateTime">
+								<xs:annotation>
+									<xs:documentation>indique la date de production du statut</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="Producteur" minOccurs="0"/>
+							<xs:element name="IdFacture" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Identifiant chez le producteur de la facture</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="DateFacture" type="xs:date" minOccurs="0"/>
+							<xs:element name="IdMandatDP" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Identifiant chez le récepteur de la facture</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="NumOrdre" type="xs:nonNegativeInteger"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Fournisseur">
+		<xs:annotation>
+			<xs:documentation>Entité productrice de la facture</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TypeIdentifiant">
+					<xs:simpleType>
+						<xs:annotation>
+							<xs:documentation>Les valeurs possibles sont : 1 pour SIRET, 2 pour TVA intracommunautaire, 3 pour pays hors UE, 4 pour RIDET, 5 pour TAHITI, 6 pour Tiers en cours d'immatriculation, 7 pour tiers physique</xs:documentation>
+						</xs:annotation>
+						<xs:restriction base="xs:nonNegativeInteger">
+							<xs:enumeration value="1"/>
+							<xs:enumeration value="2"/>
+							<xs:enumeration value="3"/>
+							<xs:enumeration value="4"/>
+							<xs:enumeration value="5"/>
+							<xs:enumeration value="6"/>
+							<xs:enumeration value="7"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Identifiant" type="xs:string"/>
+				<xs:element name="RaisonSociale" type="xs:string"/>
+				<xs:element name="CodePays" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:length value="2"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Debiteur">
+		<xs:annotation>
+			<xs:documentation>Le service destinataire de la facture</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TypeIdentifiant">
+					<xs:simpleType>
+						<xs:annotation>
+							<xs:documentation>Les valeurs possibles sont : 1 pour SIRET</xs:documentation>
+						</xs:annotation>
+						<xs:restriction base="xs:nonNegativeInteger">
+							<xs:enumeration value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Identifiant">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:length value="14"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Nom" type="xs:string" minOccurs="0"/>
+				<xs:element name="CodeService" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="100"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="NomService" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Producteur">
+		<xs:annotation>
+			<xs:documentation>Identifie le producteur du statut</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="Id" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

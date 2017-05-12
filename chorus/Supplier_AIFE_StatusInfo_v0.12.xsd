@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Fabien BERNARD 
+	(SERES SA) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="AIFE_StatusInfo">
+		<xs:annotation>
+			<xs:documentation>Container pour les remontées de statut du
+				Concentrateur AIFE</xs:documentation>
+			<xs:documentation source="v0.5">Ajout du type xs:string qui
+				manquait sur la donnée "SIRET".
+				Ajout des données "UUID" et "CreditNoteRequired"
+			</xs:documentation>
+			<xs:documentation source="v0.6">Ajout des types d'index
+				"NUMERO DE LOT", "DATE DE RECEPTION", "PROTOCOLE" et "ORIGINATOR".
+				Ajout des statuts "RECU PAR LE CONCENTRATEUR" et "ENVOI IMPOSSIBLE".
+				Suppression du contrôle de taille sur le code TVA
+			</xs:documentation>
+			<xs:documentation source="v0.7">Ajout d'informations de
+				type sur le document pour différencier les factures numérisées des
+				factures DEMAT.
+				Les deux champs ajoutés sont PartershipType et FileOrigin
+				Par rapport a l'évolution de la législation du 01/01/2013
+				le type DEMAT 289BIS correspond a EDI 
+				le type DEMAT 289 V correspond a PDF_SIGNE
+			</xs:documentation>
+			<xs:documentation source="v0.9">Ajout du statut FACTURE_INVALIDE, CONTREPASSE, AVOIR RECU</xs:documentation>
+			<xs:documentation source="v0.10">Ajout du statut CARTE ACHAT</xs:documentation>
+			<xs:documentation source="v0.11">Ajout de l'index SANDBOX</xs:documentation>
+			<xs:documentation source="v0.12">Ajout de l'index TRANSFERT_DP</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DocumentStatus" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>On aura une occurrence de DocumentStatus pour
+							chaque remontée de statut sur un document. </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Document">
+								<xs:annotation>
+									<xs:documentation>Le groupe Document contient les données
+										permettant d'identifier le document (à la fois dans le suivi
+										et dans CHORUS)</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ID" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Numéro(s) du document, facture ou avoir
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute name="Type" use="required">
+															<xs:annotation>
+																<xs:documentation>on aura toujours 2 ou 3 occurrences de
+																	cette donnée, afin de transmettre le numéro de facture
+																	et le numéro de DP. En cas de basculement sur
+																	l'exercice comptable suivant, on précisera également
+																	l'ancien numéro de DP (voir énumération pour cet
+																	attribut)</xs:documentation>
+															</xs:annotation>
+															<xs:simpleType>
+																<xs:restriction base="xs:string">
+																	<xs:enumeration value="NUMERO DE DOCUMENT"/>
+																	<xs:enumeration value="NUMERO DE DP"/>
+																	<xs:enumeration value="ANCIEN NUMERO DE DP"/>
+																</xs:restriction>
+															</xs:simpleType>
+														</xs:attribute>
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="UUID" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Numéro unique d'identification du document
+													; ce numéro, distinct du numéro de facture proprement dit,
+													permet d'identifier l'occurrence exacte de la transmission
+													d'un document (en cas de doublon)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="TypeOfDocument" type="TypeOfDocumentType">
+											<xs:annotation>
+												<xs:documentation>On utilise ici la codification standard
+													CEFACT (380 pour une facture, 381 pour un avoir)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="PartnershipType">
+											<xs:annotation>
+												<xs:documentation>Ce champ permet d'indiquer si le Document
+													est dématérialisé EDI ou PDF, ou s'il s'agit d'une facture
+													papier numérisée</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="INCONNU"/>
+													<xs:enumeration value="EDI"/>
+													<xs:enumeration value="PDF_SIGNE"/>
+													<xs:enumeration value="NUMERISATION_PAPIER"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="FileOrigin">
+											<xs:annotation>
+												<xs:documentation>Ce champ permet d'indiquer l'origine du
+													fichier reçu. Il s'agit d'une chaine de caractères libre.
+												</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="25"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="Date" type="xs:date">
+											<xs:annotation>
+												<xs:documentation>Il s'agit de la date du document, et non
+													de la date de statut</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Period" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Period_Start" type="xs:date"/>
+													<xs:element name="Period_End" type="xs:date"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Sender">
+											<xs:annotation>
+												<xs:documentation>L'identification du fournisseur
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="VAT_ID" type="xs:string">
+														<xs:annotation>
+															<xs:documentation>Code de TVA intracommunautaire du
+																fournisseur (ou code d'identification équivalent pour
+																les fournisseurs hors UE)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="SIRET" type="xs:string">
+														<xs:annotation>
+															<xs:documentation>Numéro de SIRET du Fournisseur
+															</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Name" type="xs:string">
+														<xs:annotation>
+															<xs:documentation>Raison Sociale du Fournisseur telle
+																qu''elle apparaît dans la facture</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="AdditionalInfo">
+											<xs:annotation>
+												<xs:documentation>Autres informations de la facture (données
+													issues du contenu du document)</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Index" type="IndexType" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Les index sont fournis sous la forme
+																"Clé=Valeur". Les clés sont définies par une énumération
+																(voir attribut "Name").</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="CreditNoteRequired" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Cette information permet d'indiquer,
+													automatiquement, si CHORUS requiert la transmission d'un
+													avoir pour annulr la facture (ou d'une facture
+													rectificative). Si la valeur est 'false', cela ne signifie
+													pas qu'il ne faut pas transmettre un avoir, mais que le
+													fournisseur doit prendre contact avec son acheteur afin de
+													déterminer la marche à suivre</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Status" type="StatusType">
+								<xs:annotation>
+									<xs:documentation>Si on a plusieurs mises à jour de statut à
+										faire sur un document, on pourrait envisager de rendre Status
+										répétable, pour ne pas avoir à répéter DocumentStatus.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="version" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="0.7"/>
+						<xs:enumeration value="0.8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="timestamp" type="xs:dateTime" use="required"/>
+			<xs:attribute name="sequence" type="xs:integer" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="IndexType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="Name" use="required">
+					<xs:annotation>
+						<xs:documentation>voir énumération</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="MONTANT TOTAL NET HT"/>
+							<xs:enumeration value="MONTANT TOTAL TTC"/>
+							<xs:enumeration value="ENGAGEMENT JURIDIQUE"/>
+							<xs:enumeration value="SERVICE EXECUTANT"/>
+							<xs:enumeration value="LIBELLE DU SERVICE EXECUTANT"/>
+							<xs:enumeration value="SIREN DU DESTINATAIRE"/>
+							<xs:enumeration value="NOM DU DESTINATAIRE"/>
+							<xs:enumeration value="NUMERO DE LOT"/>
+							<xs:enumeration value="DATE DE RECEPTION"/>
+							<xs:enumeration value="PROTOCOLE"/>
+							<xs:enumeration value="ORIGINATOR"/>
+							<xs:enumeration value="NUM FACTURE REF"/>
+							<xs:enumeration value="SANDBOX"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="StatusType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="Code" use="required">
+					<xs:annotation>
+						<xs:documentation>
+							Voir énumération, il s'agit des codes liés au
+							traitement dans CHORUS et sur le Concentrateur.
+							Le code "ANALYSE
+							EN COURS" est remplacé par "RECU PAR LE CONCENTRATEUR" (plus
+							approprié).
+							Le code "NON VALIDE" est remplacé par "ENVOI
+							IMPOSSIBLE" (plus précis).
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="RECU PAR LE CONCENTRATEUR"/>
+							<xs:enumeration value="ANALYSE EN COURS"/>
+							<xs:enumeration value="NON VALIDE"/>
+							<xs:enumeration value="ENVOI IMPOSSIBLE"/>
+							<xs:enumeration value="NON CONFORME CONCENTRATEUR"/>
+							<xs:enumeration value="CONFORME CONCENTRATEUR"/>
+							<xs:enumeration value="GROUPAGE EFFECTUE"/>
+							<xs:enumeration value="ENVOI A CHORUS EFFECTUE"/>
+							<xs:enumeration value="IRRECEVABLE"/>
+							<xs:enumeration value="INTEGRATION CHORUS OK"/>
+							<xs:enumeration value="REJET PAR CHORUS"/>
+							<xs:enumeration value="COMPTABILISE"/>
+							<xs:enumeration value="BASCULE SUR EXERCICE SUIVANT"/>
+							<xs:enumeration value="SUPPRIME"/>
+							<xs:enumeration value="MISE EN PAIEMENT"/>
+							<xs:enumeration value="VERIFICATION SIGNATURE KO"/>
+							<xs:enumeration value="ARCHIVAGE OK"/>
+							<xs:enumeration value="FACTURE INVALIDE"/>
+							<xs:enumeration value="CONTREPASSE"/>
+							<xs:enumeration value="AVOIR RECU"/>
+							<xs:enumeration value="CARTE ACHAT"/>
+							<xs:enumeration value="TRANSFERT_DP"/> 
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="Date" type="xs:dateTime" use="required">
+					<xs:annotation>
+						<xs:documentation>La date du statut</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="Note" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>
+							Attribut supplémentaire pour véhiculer des
+							informations additionelles et optionnelles comme le motif de
+							suppression dans le cas d'un statut SUPPRIME.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="TypeOfDocumentType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="Code" type="xs:integer">
+					<xs:annotation>
+						<xs:documentation>Ce code permet d'identifier le type de document,
+							parmi les trois types supportés (voir énumération)
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

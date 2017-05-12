@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 2 (http://www.altova.com) by AIFE (BULL) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="CPPStructuresPartenaires">
+		<xs:annotation>
+			<xs:documentation>Liste des structures publiques partenaires gerees
+				dans le Chorus Portail Pro (CPP).
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CPPStructurePartenaireUnitaire"
+					minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="Version" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Identifiant de la version du format actuellement V0_6_1</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CPPStructurePartenaireUnitaire">
+		<xs:annotation>
+			<xs:documentation>Contient les éléments relatifs à une structure
+				publique partenaire geree dans CPP
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TypeIdentifiant">
+					<xs:simpleType>
+						<xs:annotation>
+							<xs:documentation>
+								Les valeurs possibles sont : 1 pour SIRET
+							</xs:documentation>
+						</xs:annotation>
+						<xs:restriction base="xs:nonNegativeInteger">
+							<xs:enumeration value="1" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Identifiant">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:length value="14" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="RaisonSociale">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="80" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="AdressePostale" type="AdressePostaleType"
+					minOccurs="0" />
+				<xs:element ref="Services" minOccurs="0" />
+				<xs:element name="EmetteurEdi" type="xs:boolean"
+					minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>VRAI= le partenaire peut émettre des flux en EDI
+							vers CPP
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="RecepteurEdi" type="xs:boolean"
+					minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>VRAI= le partenaire peut recevoir des flux en
+							EDI de CPP
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="GestionStatutMiseEnPaiement" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>VRAI = le partenaire gere le statut de mise en
+							paiement des factures
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="GestionEngagement" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>VRAI = le partenaire exige un numéro
+							d'engagement dans sa facture.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="GestionService" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>VRAI= le partenaire exige un code service dans
+							ses échanges
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="GestionServiceEngagement" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>VRAI= le partenaire exige un code service ou un
+							code engagement dans ses échanges
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="EstMOA" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>VRAI= le partenaire joue le rôle de maitrise
+							d'ouvrage pour les factures de travaux
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="EstMOAUniquement" type="xs:boolean"
+					minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>VRAI= le partenaire joue uniquement le rôle de
+							maitrise d'ouvrage
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="StructureActive" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>VRAI=la structure publique est en capacité de
+							recevoir des factures
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Services">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Service" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Service">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Code">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="100" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Nom" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="100" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="AdressePostale" type="AdressePostaleType"
+					minOccurs="0" />
+				<xs:element name="GestionEGMT" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>VRAI = le partenaire exige un numéro
+							d'engagement dans sa facture.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ServiceActif" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>VRAI = le service est actif.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="AdressePostaleType">
+		<xs:sequence>
+			<xs:element name="Adresse">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ComplementAdresse1" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ComplementAdresse2" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CodePostal">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="5" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Ville">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element ref="Pays" minOccurs="0" />
+			<xs:element name="NumTelephone" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="Courriel" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Pays">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Code">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="2" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Libelle">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="100" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
